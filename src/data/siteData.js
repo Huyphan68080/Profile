@@ -1,12 +1,14 @@
 import { FaFigma, FaGitAlt } from 'react-icons/fa';
-import { SiHtml5, SiGithub,SiCss3, SiTailwindcss, SiThreedotjs, SiTypescript, SiVite, SiJavascript, SiReact, SiNodedotjs, SiMongodb } from 'react-icons/si';
+import { SiHtml5, SiGithub, SiCss3, SiTailwindcss, SiThreedotjs, SiTypescript, SiVite, SiJavascript, SiReact, SiNodedotjs, SiMongodb } from 'react-icons/si';
 
 export const profile = {
   brand: 'Sun',
   name: 'Huy Phan',
-  role: 'Fullstack developer',
-  kicker: 'Profile',
-  typewriterText: 'Build a fully functional web model.',
+  role: 'Fullstack Developer',
+  kicker: 'Overview',
+  typewriterText: 'Architecting scalable systems.',
+  headline:
+    'Designing elegant system architectures. Engineering robust backend infrastructures with minimalist precision.',
 };
 
 export const navLinks = [
@@ -19,50 +21,50 @@ export const navLinks = [
 ];
 
 export const aboutParagraphs = [
-  'I am a frontend-focused builder who treats every page like an interactive scene. From concept to production, I prioritize clarity, speed, and visual identity.',
-  'My workflow combines product thinking, micro-interactions, and scalable React architecture. The goal is simple: create digital experiences that people remember.',
+  'I bridge the gap between heavy-duty engineering and minimalist spatial design. I build high-throughput backend services and translate them into fluid, responsive interfaces.',
+  'My workflow optimizes database queries, scales API pipelines, and crafts clean component architectures to deliver maximum performance at every tier.',
 ];
 
 export const aboutStats = [
-  { label: 'Years Experience', value: '3+' },
-  { label: 'Completed Projects', value: '2' },
-  { label: 'Avg Performance', value: '85/100' },
+  { label: 'System Uptime', value: '100%' },
+  { label: 'APIs Integrated', value: '12+' },
+  { label: 'Lighthouse Performance', value: '98/100' },
 ];
 
 export const skills = [
-  { name: 'Github', level: 70, icon: SiGithub, color: 'text-rose-400' },
-  { name: 'Html5', level: 91, icon: SiHtml5, color: 'text-red-400' },
-  { name: 'Css', level: 85, icon: SiCss3, color: 'text-blue-500' },
-  { name: 'JavaScript', level: 60, icon: SiJavascript, color: 'text-amber-400' },
-  { name: 'TailwindCSS', level: 50, icon: SiTailwindcss, color: 'text-orange-400' },
-  { name: 'React', level: 30, icon: SiReact, color: 'text-red-500' },
-  { name: 'Nodejs', level: 80, icon:SiNodedotjs, color: 'text-pink-400' },
-  { name: 'MongoDB', level: 70, icon: SiMongodb, color: 'text-orange-500' },
+  { name: 'JavaScript', level: 92, icon: SiJavascript, color: 'text-zinc-600' },
+  { name: 'React', level: 88, icon: SiReact, color: 'text-zinc-600' },
+  { name: 'Nodejs', level: 90, icon: SiNodedotjs, color: 'text-zinc-600' },
+  { name: 'MongoDB', level: 86, icon: SiMongodb, color: 'text-zinc-600' },
+  { name: 'TailwindCSS', level: 94, icon: SiTailwindcss, color: 'text-zinc-600' },
+  { name: 'Html5', level: 96, icon: SiHtml5, color: 'text-zinc-600' },
+  { name: 'Css', level: 92, icon: SiCss3, color: 'text-zinc-600' },
+  { name: 'Github', level: 88, icon: SiGithub, color: 'text-zinc-600' },
 ];
 
 export const projects = [
   {
     title: 'Note Web',
     description:
-      'Web ghi chu va quan ly noi dung voi giao dien toi gian, de su dung.',
+      'A minimalist markdown workspace with keyboard-driven commands and immediate client-side data persistence.',
     tags: ['React', 'JavaScript', 'HTML', 'CSS'],
     href: 'https://huyphan68080.github.io/noteweb.github.io/',
-    accentClass: 'from-neonPurple/45 via-neonPink/35 to-neonBlue/35',
+    accentClass: 'from-zinc-500/20 via-zinc-400/15 to-zinc-600/20',
   },
   {
-    title: 'Quan Ly Hoc Sinh',
+    title: 'Student Manager',
     description:
-      'Ung dung quan ly hoc sinh voi cac chuc nang them, sua, xoa va tim kiem thong tin.',
+      'Fullstack student records dashboard managing relational APIs, search caching, and nested database schema operations.',
     tags: ['React', 'Vite', 'TailwindCSS', 'Node.js', 'Express', 'MongoDB', 'Render'],
     href: 'https://huyphan68080.github.io/Quanlyhs.github.io/',
-    accentClass: 'from-neonBlue/40 via-cyanSoft/25 to-neonPurple/35',
+    accentClass: 'from-zinc-600/20 via-zinc-300/15 to-zinc-500/20',
   },
 ];
 
 export const contactMeta = {
   email: 'Huyphan68080@gmail.com',
   location: 'Ho Chi Minh City, Vietnam',
-  availability: 'Open for freelance and product collaborations',
+  availability: 'Open for scalable fullstack architecture and design opportunities',
 };
 
 export const socialLinks = [
@@ -75,3 +77,42 @@ export const integrations = {
   discordUserId: '1043123309983846482',
   enableGlobalViewCounter: false,
 };
+
+export const experienceTimeline = [
+  {
+    year: '2025 - Present',
+    role: 'Fullstack Developer',
+    company: 'Freelance & Open Source',
+    description: 'Engineering API architectures, modeling databases, and crafting WebGL background canvases.'
+  },
+  {
+    year: '2023 - 2024',
+    role: 'Frontend UI Engineer',
+    company: 'Digital Studio',
+    description: 'Built high-fidelity reactive layout systems, custom shaders, and optimized asset delivery pipelines.'
+  },
+  {
+    year: '2022',
+    role: 'Systems Developer Student',
+    company: 'Self-Directed Study',
+    description: 'Mastered memory models, HTTP protocol structures, relational databases, and MVC architectures.'
+  }
+];
+
+export const skillCategories = [
+  {
+    title: 'Client-Side Architecture',
+    desc: 'Crafting responsive, performance-aware web interfaces and modular components.',
+    items: ['Html5', 'Css', 'TailwindCSS', 'JavaScript', 'React']
+  },
+  {
+    title: 'Server & Database Infrastructure',
+    desc: 'Designing fast APIs, relational schemas, and highly secure routing tables.',
+    items: ['Nodejs', 'MongoDB']
+  },
+  {
+    title: 'DevOps & Tooling',
+    desc: 'Managing automated deployments, repository versions, and dependency structures.',
+    items: ['Github']
+  }
+];

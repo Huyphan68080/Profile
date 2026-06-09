@@ -1,82 +1,102 @@
 import { motion, useTransform } from 'framer-motion';
+import { useMemo } from 'react';
 import ParticleField from '../effects/ParticleField';
+import BackgroundBot from '../effects/BackgroundBot';
+import CanvasMeteors from '../effects/CanvasMeteors';
 
-const parallaxOrbs = [
-  {
-    id: 'far',
-    className:
-      'absolute -left-44 -top-36 h-[34rem] w-[34rem] rounded-full bg-neonPurple/16 blur-[150px] will-change-transform',
-    mobileClassName: '-left-28 -top-20 h-[20rem] w-[20rem] blur-[90px]',
-    depth: 16,
-  },
-  {
-    id: 'mid',
-    className:
-      'absolute right-[-12rem] top-[18%] h-[26rem] w-[26rem] rounded-full bg-neonBlue/16 blur-[130px] will-change-transform',
-    mobileClassName: '-right-24 top-[22%] h-[17rem] w-[17rem] blur-[80px]',
-    depth: 26,
-  },
-  {
-    id: 'near',
-    className:
-      'absolute bottom-[-14rem] left-[34%] h-[24rem] w-[24rem] rounded-full bg-neonPink/13 blur-[115px] will-change-transform',
-    mobileClassName: 'bottom-[-8rem] left-[30%] h-[14rem] w-[14rem] blur-[70px]',
-    depth: 36,
-  },
-];
+const AnimatedBackground = ({ depth, isMobile = false, reduceMotion = false }) => {
+  const orbs = useMemo(() => {
+    if (reduceMotion || isMobile) return [];
+    return [
+      {
+        size: 'h-[440px] w-[440px]',
+        position: 'top-[8%] left-[12%]',
+        gradient: 'from-zinc-400/5 via-zinc-500/3 to-transparent',
+        blur: 'blur-[20px]',
+      },
+      {
+        size: 'h-[360px] w-[360px]',
+        position: 'bottom-[12%] right-[8%]',
+        gradient: 'from-zinc-300/4 via-zinc-500/2 to-transparent',
+        blur: 'blur-[24px]',
+      },
+    ];
+  }, [isMobile, reduceMotion]);
 
-const ParallaxOrb = ({ orb, depth, enableParallax, isMobile }) => {
-  const x = useTransform(depth.x, (value) => (enableParallax ? value * orb.depth : 0));
-  const y = useTransform(depth.y, (value) => (enableParallax ? value * orb.depth : 0));
-
-  return <motion.div className={`${orb.className} ${isMobile ? orb.mobileClassName : ''}`} style={{ x, y }} />;
-};
-
-const AnimatedBackground = ({ depth, theme, isMobile = false, reduceMotion = false }) => {
-  const isDark = theme === 'dark';
-  const enableParallax = !reduceMotion;
-  const activeOrbs = parallaxOrbs;
-  const auroraPrimaryX = useTransform(depth.x, (value) => (enableParallax ? value * 18 : 0));
-  const auroraPrimaryY = useTransform(depth.y, (value) => (enableParallax ? value * 14 : 0));
-  const auroraSecondaryX = useTransform(depth.x, (value) => (enableParallax ? value * -22 : 0));
-  const auroraSecondaryY = useTransform(depth.y, (value) => (enableParallax ? value * -16 : 0));
+  const parallaxX = useTransform(depth.x, [-0.7, 0.7], [-14, 14]);
+  const parallaxY = useTransform(depth.y, [-0.7, 0.7], [-14, 14]);
 
   return (
-    <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden [contain:layout_paint_style]">
-      <div className={`absolute inset-0 ${isDark ? 'bg-red-void opacity-98' : 'bg-red-void-light opacity-96'}`} />
+    <div
+      className="pointer-events-none fixed inset-0 -z-10 overflow-hidden bg-[var(--bg-base)]"
+      style={{ contain: 'layout paint style' }}
+      aria-hidden="true"
+    >
+      {/* 2D subtle stardust/particle field */}
+      <div className="absolute inset-0 opacity-[0.12] pointer-events-none">
+        <ParticleField depth={depth} isMobile={isMobile} reduceMotion={reduceMotion} />
+      </div>
+
+      {/* Canvas-drawn procedural meteorites */}
+      {!reduceMotion && !isMobile && (
+        <CanvasMeteors depth={depth} />
+      )}
+
+      {/* 3D Background Bot geometric companion */}
+      <BackgroundBot isMobile={isMobile} reduceMotion={reduceMotion} />
+
+      {/* Noise texture overlay */}
       <div
-        className={`absolute inset-0 ${
-          isDark
-            ? 'bg-[radial-gradient(circle_at_top_right,rgba(255,106,61,0.18),transparent_45%),radial-gradient(circle_at_bottom_left,rgba(255,43,85,0.22),transparent_52%)]'
-            : 'bg-[radial-gradient(circle_at_top_right,rgba(189,47,84,0.12),transparent_46%),radial-gradient(circle_at_bottom_left,rgba(143,26,59,0.1),transparent_54%)]'
-        }`}
-      />
-      <motion.div
-        style={{ x: auroraPrimaryX, y: auroraPrimaryY }}
-        className={`absolute inset-[-24%] aurora-layer aurora-layer-primary ${reduceMotion ? 'aurora-static' : ''}`}
-      />
-      <motion.div
-        style={{ x: auroraSecondaryX, y: auroraSecondaryY }}
-        className={`absolute inset-[-30%] aurora-layer aurora-layer-secondary ${reduceMotion ? 'aurora-static' : ''}`}
+        className="pointer-events-none fixed inset-0 z-[1] opacity-[0.03]"
+        style={{
+          backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
+        }}
       />
 
-      {activeOrbs.map((orb) => (
-        <ParallaxOrb key={orb.id} orb={orb} depth={depth} enableParallax={enableParallax} isMobile={isMobile} />
+      {/* Parallax orbs */}
+      {orbs.map((orb, index) => (
+        <motion.div
+          key={index}
+          className={`pointer-events-none absolute rounded-full bg-gradient-to-br ${orb.gradient} ${orb.size} ${orb.position} ${orb.blur} will-change-transform`}
+          style={{ x: parallaxX, y: parallaxY }}
+        />
       ))}
 
+      {/* Aurora layers */}
+      {!reduceMotion && (
+        <motion.div
+          className="aurora-layer aurora-layer-primary pointer-events-none absolute -left-[15%] -top-[20%] h-[80vh] w-[80vw] will-change-transform"
+          style={{ x: parallaxX, y: parallaxY }}
+        />
+      )}
+      {!reduceMotion && !isMobile && (
+        <motion.div
+          className="aurora-layer aurora-layer-secondary pointer-events-none absolute -bottom-[12%] -right-[12%] h-[58vh] w-[58vw] will-change-transform"
+          style={{ x: parallaxX, y: parallaxY }}
+        />
+      )}
+
+      {/* Cyber grid */}
       <div
-        className={`absolute inset-0 [background-image:linear-gradient(rgba(251,113,133,0.16)_1px,transparent_1px),linear-gradient(90deg,rgba(251,113,133,0.16)_1px,transparent_1px)] [background-size:70px_70px] [mask-image:radial-gradient(circle_at_center,black_42%,transparent_86%)] ${
-          isDark ? 'opacity-18' : 'opacity-16'
-        } ${reduceMotion ? '' : 'cyber-grid'}`}
+        className="cyber-grid pointer-events-none absolute inset-0"
+        style={{
+          backgroundImage: `
+            linear-gradient(var(--surface-border) 1px, transparent 1px),
+            linear-gradient(90deg, var(--surface-border) 1px, transparent 1px)
+          `,
+          backgroundSize: '72px 72px',
+          maskImage: 'radial-gradient(ellipse at 50% 50%, black 20%, transparent 68%)',
+          WebkitMaskImage: 'radial-gradient(ellipse at 50% 50%, black 20%, transparent 68%)',
+        }}
       />
+
+      {/* Radial vignette */}
       <div
-        className={`absolute inset-0 ${
-          isDark
-            ? 'bg-[radial-gradient(circle_at_center,transparent_30%,rgba(0,0,0,0.82)_100%)]'
-            : 'bg-[radial-gradient(circle_at_center,transparent_42%,rgba(42,7,18,0.24)_100%)]'
-        }`}
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background: 'radial-gradient(ellipse at 50% 48%, transparent 30%, color-mix(in srgb, var(--bg-base) 60%, transparent) 100%)',
+        }}
       />
-      <ParticleField depth={depth} theme={theme} isMobile={isMobile} reduceMotion={reduceMotion} />
     </div>
   );
 };

@@ -273,12 +273,54 @@ const getSocketPresenceData = (message, targetUserId) => {
   return null;
 };
 
+const getActiveMediaStatus = (presenceData) => {
+  if (!presenceData) return null;
+  
+  // 1. Spotify direct listener
+  if (presenceData.listening_to_spotify && presenceData.spotify) {
+    return {
+      song: presenceData.spotify.song,
+      artist: presenceData.spotify.artist,
+      source: 'Spotify',
+      albumArtUrl: presenceData.spotify.album_art_url,
+    };
+  }
+
+  // 2. Discord activities of type 2 (Media Listening)
+  const activities = Array.isArray(presenceData.activities) ? presenceData.activities : [];
+  const media = activities.find((act) => act.type === 2);
+  if (media) {
+    let albumArtUrl = null;
+    const largeImage = media.assets?.large_image;
+    if (largeImage) {
+      if (largeImage.startsWith('mp:external/')) {
+        const parts = largeImage.split('/https/');
+        if (parts[1]) {
+          albumArtUrl = 'https://' + parts[1];
+        }
+      } else if (media.application_id) {
+        albumArtUrl = `https://cdn.discordapp.com/app-assets/${media.application_id}/${largeImage}.png`;
+      }
+    }
+
+    return {
+      song: media.details || media.name || 'Active Track',
+      artist: media.state || 'Unknown Artist',
+      source: media.name || 'Music',
+      albumArtUrl: albumArtUrl,
+    };
+  }
+
+  return null;
+};
+
 export const useSiteStatus = () => {
   const [state, setState] = useState({
     availability: getBrowserStatus(),
     source: 'browser',
     activityEntries: [],
     customLabel: '',
+    activeMedia: null,
     ...getInitialDiscordAvatarState(DISCORD_USER_ID),
   });
   const [nowMs, setNowMs] = useState(() => Date.now());
@@ -337,6 +379,8 @@ export const useSiteStatus = () => {
       const avatarUrl = getDiscordAvatarUrl(presenceData?.discord_user, normalizedId);
       const { avatarDecorationUrl, avatarDecorationFallbackUrl } = getDiscordAvatarDecorationData(presenceData?.discord_user);
 
+      const activeMedia = getActiveMediaStatus(presenceData);
+
       if (!isMounted) return;
       setState({
         availability: discordStatus,
@@ -346,6 +390,7 @@ export const useSiteStatus = () => {
         avatarUrl,
         avatarDecorationUrl,
         avatarDecorationFallbackUrl,
+        activeMedia,
       });
     };
 
@@ -569,90 +614,97 @@ export const useSiteStatus = () => {
       const browserOnline = state.availability === 'online';
       return {
         label: browserOnline ? 'Owner Online' : 'Owner Offline',
-        toneClass: browserOnline ? 'text-emerald-600 dark:text-emerald-300' : 'text-zinc-600 dark:text-zinc-300',
-        dotClass: browserOnline ? 'bg-emerald-500 dark:bg-emerald-300' : 'bg-zinc-500 dark:bg-zinc-300',
+        toneClass: browserOnline ? 'text-emerald-900 font-bold' : 'text-zinc-800 font-bold',
+        dotClass: browserOnline ? 'bg-emerald-500 ring-1 ring-emerald-600/30 shadow-[0_0_4px_rgba(16,185,129,0.4)]' : 'bg-zinc-400 ring-1 ring-zinc-500/20 shadow-[0_0_2px_rgba(156,163,175,0.2)]',
         activityLines: [],
         customLabel: '',
         avatarUrl: state.avatarUrl,
         avatarDecorationUrl: state.avatarDecorationUrl,
         avatarDecorationFallbackUrl: state.avatarDecorationFallbackUrl,
+        activeMedia: null,
       };
     }
 
     if (state.availability === 'online') {
       return {
         label: 'Owner Online (Discord)',
-        toneClass: 'text-emerald-600 dark:text-emerald-300',
-        dotClass: 'bg-emerald-500 dark:bg-emerald-300',
+        toneClass: 'text-emerald-900 font-bold',
+        dotClass: 'bg-[#23a55a] ring-1 ring-[#1f8b4c]/30 shadow-[0_0_4px_rgba(35,165,90,0.4)]',
         activityLines,
         customLabel: state.customLabel,
         avatarUrl: state.avatarUrl,
         avatarDecorationUrl: state.avatarDecorationUrl,
         avatarDecorationFallbackUrl: state.avatarDecorationFallbackUrl,
+        activeMedia: state.activeMedia,
       };
     }
 
     if (state.availability === 'idle') {
       return {
         label: 'Owner Idle (Discord)',
-        toneClass: 'text-amber-600 dark:text-amber-300',
-        dotClass: 'bg-amber-500 dark:bg-amber-300',
+        toneClass: 'text-amber-900 font-bold',
+        dotClass: 'bg-[#f0b232] ring-1 ring-[#d97706]/40 shadow-[0_0_4px_rgba(240,178,50,0.5)]',
         activityLines,
         customLabel: state.customLabel,
         avatarUrl: state.avatarUrl,
         avatarDecorationUrl: state.avatarDecorationUrl,
         avatarDecorationFallbackUrl: state.avatarDecorationFallbackUrl,
+        activeMedia: state.activeMedia,
       };
     }
 
     if (state.availability === 'dnd') {
       return {
         label: 'Owner Do Not Disturb',
-        toneClass: 'text-rose-600 dark:text-rose-300',
-        dotClass: 'bg-rose-500 dark:bg-rose-300',
+        toneClass: 'text-rose-900 font-bold',
+        dotClass: 'bg-[#f23f43] ring-1 ring-[#b91c1c]/25 shadow-[0_0_4px_rgba(242,63,67,0.4)]',
         activityLines,
         customLabel: state.customLabel,
         avatarUrl: state.avatarUrl,
         avatarDecorationUrl: state.avatarDecorationUrl,
         avatarDecorationFallbackUrl: state.avatarDecorationFallbackUrl,
+        activeMedia: state.activeMedia,
       };
     }
 
     if (state.availability === 'offline') {
       return {
         label: 'Owner Offline (Discord)',
-        toneClass: 'text-zinc-600 dark:text-zinc-300',
-        dotClass: 'bg-zinc-500 dark:bg-zinc-300',
+        toneClass: 'text-zinc-800 font-bold',
+        dotClass: 'bg-[#80848e] ring-1 ring-zinc-500/20 shadow-[0_0_2px_rgba(128,132,142,0.2)]',
         activityLines: [],
         customLabel: '',
         avatarUrl: state.avatarUrl,
         avatarDecorationUrl: state.avatarDecorationUrl,
         avatarDecorationFallbackUrl: state.avatarDecorationFallbackUrl,
+        activeMedia: null,
       };
     }
 
     if (state.availability === 'not_linked') {
       return {
         label: 'Lanyard Not Linked',
-        toneClass: 'text-orange-600 dark:text-orange-300',
-        dotClass: 'bg-orange-500 dark:bg-orange-300',
+        toneClass: 'text-zinc-800 font-bold',
+        dotClass: 'bg-[#80848e] ring-1 ring-zinc-500/20 shadow-[0_0_2px_rgba(128,132,142,0.2)]',
         activityLines: [],
         customLabel: '',
         avatarUrl: state.avatarUrl,
         avatarDecorationUrl: state.avatarDecorationUrl,
         avatarDecorationFallbackUrl: state.avatarDecorationFallbackUrl,
+        activeMedia: null,
       };
     }
 
     return {
       label: 'Discord Unavailable',
-      toneClass: 'text-orange-600 dark:text-orange-300',
-      dotClass: 'bg-orange-500 dark:bg-orange-300',
+      toneClass: 'text-zinc-800 font-bold',
+      dotClass: 'bg-[#80848e] ring-1 ring-zinc-500/20 shadow-[0_0_2px_rgba(128,132,142,0.2)]',
       activityLines: [],
       customLabel: '',
       avatarUrl: state.avatarUrl,
       avatarDecorationUrl: state.avatarDecorationUrl,
       avatarDecorationFallbackUrl: state.avatarDecorationFallbackUrl,
+      activeMedia: null,
     };
   }, [
     state.availability,

@@ -8,4 +8,15 @@ const base = isGithubActions && repositoryName ? `/${repositoryName}/` : '/';
 export default defineConfig({
   plugins: [react()],
   base,
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          three: ['three', '@react-three/fiber', '@react-three/drei'],
+          gsap: ['gsap'],
+          vendor: ['react', 'react-dom', 'framer-motion'],
+        },
+      },
+    },
+  },
 });

@@ -1,71 +1,132 @@
 import { motion } from 'framer-motion';
 
-const LoadingScreen = ({ progress, theme, isMobile = false }) => {
-  const isDark = theme === 'dark';
+const getProgressPhase = (pct) => {
+  if (pct < 15) return "Initializing Core System";
+  if (pct < 35) return "Resolving Vector Shaders";
+  if (pct < 60) return "Staggering Scroll Triggers";
+  if (pct < 85) return "Synchronizing Lanyard Presence";
+  return "Compiling Spatial Canvas";
+};
+
+const LoadingScreen = ({ progress = 0, isMobile = false }) => {
+  const clamped = Math.min(100, Math.max(0, Math.round(progress)));
+  
+  // Brand name text split
+  const brandLetters = "HUY PHAN".split("");
+
+  // SVG Circle calculations
+  const radius = 30;
+  const circumference = 2 * Math.PI * radius;
+  const strokeDashoffset = circumference - (clamped / 100) * circumference;
 
   return (
     <motion.div
-      className={`fixed inset-0 z-[120] flex items-center justify-center overflow-hidden backdrop-blur-2xl ${
-        isDark ? 'bg-[#090102]/95' : 'bg-[#fff1f3]/92'
-      }`}
+      key="loading"
       initial={{ opacity: 1 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.75, ease: 'easeInOut' }}
+      exit={{ opacity: 1 }}
+      className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-transparent overflow-hidden pointer-events-none"
     >
+      {/* Blueprint Dot Grid Texture */}
       <div
-        className={`absolute inset-0 ${
-          isDark
-            ? 'bg-[linear-gradient(132deg,#090102_8%,#2e040d_42%,#4a0b17_68%,#130204_100%)] opacity-88'
-            : 'bg-[linear-gradient(132deg,#fff5f7_8%,#ffdce3_42%,#ffc6d1_68%,#ffe8ec_100%)] opacity-100'
-        }`}
+        className="pointer-events-none absolute inset-0 opacity-[0.02] z-[1]"
+        style={{
+          backgroundImage: `radial-gradient(circle, rgba(255,255,255,0.15) 1px, transparent 1px)`,
+          backgroundSize: '28px 28px',
+        }}
+        aria-hidden="true"
       />
-      <div
-        className={`absolute inset-0 ${
-          isDark
-            ? 'bg-[radial-gradient(circle_at_20%_20%,rgba(255,55,95,0.28),transparent_42%),radial-gradient(circle_at_84%_70%,rgba(255,120,70,0.24),transparent_46%)]'
-            : 'bg-[radial-gradient(circle_at_20%_20%,rgba(255,96,130,0.22),transparent_40%),radial-gradient(circle_at_84%_70%,rgba(255,138,96,0.2),transparent_48%)]'
-        }`}
-      />
-      <div className="absolute -left-32 top-20 h-72 w-72 rounded-full bg-neonPurple/35 blur-[130px]" />
-      <div className="absolute -right-24 bottom-10 h-72 w-72 rounded-full bg-neonBlue/35 blur-[130px]" />
-
-      <motion.div
-        initial={{ opacity: 0, scale: 0.93, y: 30 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        transition={{ duration: 0.75, ease: 'easeOut' }}
-        className="glass-panel relative w-[min(560px,90vw)] rounded-3xl border border-slate-200/20 p-8 sm:p-10"
-      >
-        <p className={`cyber-title text-xs uppercase tracking-[0.3em] ${isDark ? 'text-rose-300' : 'text-rose-500'}`}>
-          Boot Sequence
-        </p>
-        <h2 className={`neon-text mt-4 text-2xl font-semibold sm:text-3xl ${isDark ? 'text-slate-100' : 'text-zinc-900'}`}>
-          Initializing Portfolio Interface
-        </h2>
-
-        <div className="mt-8 h-3 overflow-hidden rounded-full bg-slate-700/35">
+      
+      {/* Staggered Vertical Panels (Curtain Wipe) */}
+      <div className="absolute inset-0 flex z-0">
+        {[0, 1, 2, 3].map((i) => (
           <motion.div
-            className="h-full rounded-full bg-gradient-to-r from-rose-500 via-red-500 to-orange-400 shadow-neon"
-            animate={{ width: `${Math.round(progress)}%` }}
-            transition={{ duration: 0.24, ease: 'easeOut' }}
-          />
+            key={i}
+            className="h-full flex-1 bg-[#0b0b0c] relative"
+            initial={{ y: '0%' }}
+            exit={{ y: '-100%' }}
+            transition={{
+              duration: 0.9,
+              ease: [0.76, 0, 0.24, 1], // cinematic luxury bezier curve
+              delay: i * 0.08,
+            }}
+          >
+            {/* Bottom edge glowing light trail */}
+            <div className="absolute bottom-0 inset-x-0 h-[1.5px] bg-gradient-to-r from-transparent via-white/25 to-transparent pointer-events-none" />
+          </motion.div>
+        ))}
+      </div>
+
+      {/* Floating Center Content */}
+      <motion.div
+        initial={{ opacity: 1 }}
+        exit={{ opacity: 0, y: -24 }}
+        transition={{ duration: 0.45, ease: 'easeOut' }}
+        className="relative z-10 flex flex-col items-center justify-center text-center px-6"
+      >
+        {/* Brand Name (Cinematic Staggered Letter Reveal) */}
+        <div className="flex overflow-hidden">
+          {brandLetters.map((char, index) => (
+            <motion.span
+              key={index}
+              initial={{ y: '100%', opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{
+                duration: 0.8,
+                ease: [0.16, 1, 0.3, 1],
+                delay: index * 0.04,
+              }}
+              className="cyber-title text-base font-extrabold uppercase tracking-[0.55em] text-white inline-block last:tracking-normal"
+            >
+              {char === " " ? "\u00A0" : char}
+            </motion.span>
+          ))}
         </div>
-        <div
-          className={`mt-4 flex items-center justify-between text-xs uppercase tracking-[0.24em] ${
-            isDark ? 'text-slate-300/90' : 'text-zinc-700'
-          }`}
-        >
-          <span>Neural Sync</span>
-          <span>{Math.round(progress)}%</span>
+        
+        {/* Thin minimalist line separator */}
+        <div className="w-10 h-[1px] bg-white/10 my-4" />
+
+        {/* Circular Progress Ring with Centered Percentage */}
+        <div className="relative h-20 w-20 flex items-center justify-center">
+          <svg className="w-full h-full transform -rotate-90">
+            {/* Background track */}
+            <circle
+              cx="40"
+              cy="40"
+              r={radius}
+              className="stroke-white/5 fill-none"
+              strokeWidth="1"
+            />
+            {/* Active progress */}
+            <motion.circle
+              cx="40"
+              cy="40"
+              r={radius}
+              className="stroke-white/40 fill-none"
+              strokeWidth="1.5"
+              strokeDasharray={circumference}
+              animate={{ strokeDashoffset }}
+              transition={{ duration: 0.2, ease: 'easeOut' }}
+              strokeLinecap="round"
+            />
+          </svg>
+          {/* Centered counter number */}
+          <span className="absolute font-mono text-lg font-light tracking-tighter text-white/90">
+            {clamped}%
+          </span>
         </div>
 
-        <div className={`mt-7 flex items-center gap-3 text-sm ${isDark ? 'text-slate-300/85' : 'text-zinc-700'}`}>
-          <motion.span
-            className="inline-block h-2.5 w-2.5 rounded-full bg-rose-300"
-            animate={{ opacity: [0.2, 1, 0.2] }}
-            transition={{ duration: 1.2, repeat: Number.POSITIVE_INFINITY }}
-          />
-          Optimizing shaders and scene layers...
+        {/* Dynamic System Setup Status (Micro-interaction) */}
+        <div className="h-4 overflow-hidden mt-4">
+          <motion.p
+            key={getProgressPhase(clamped)}
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 0.35, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.4, ease: 'easeOut' }}
+            className="text-[7.5px] font-bold uppercase tracking-[0.3em] text-white pl-[0.3em]"
+          >
+            {getProgressPhase(clamped)}
+          </motion.p>
         </div>
       </motion.div>
     </motion.div>

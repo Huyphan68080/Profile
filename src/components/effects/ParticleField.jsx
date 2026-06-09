@@ -1,13 +1,25 @@
 import { useEffect, useMemo, useRef } from 'react';
 
-const DESKTOP_PARTICLES = 88;
-const MOBILE_PARTICLES = 52;
-const DESKTOP_LINK_DISTANCE = 138;
-const MOBILE_LINK_DISTANCE = 100;
-const DESKTOP_MOUSE_RADIUS = 190;
-const MOBILE_MOUSE_RADIUS = 130;
-const DESKTOP_MOUSE_LINK_DISTANCE = 152;
-const MOBILE_MOUSE_LINK_DISTANCE = 108;
+const DESKTOP_PARTICLES = 12;
+const MOBILE_PARTICLES = 0;
+const DESKTOP_LINK_DISTANCE = 80;
+const MOBILE_LINK_DISTANCE = 56;
+const DESKTOP_MOUSE_RADIUS = 85;
+const MOBILE_MOUSE_RADIUS = 60;
+const DESKTOP_MOUSE_LINK_DISTANCE = 82;
+const MOBILE_MOUSE_LINK_DISTANCE = 60;
+const TARGET_FPS_HIGH = 30;
+const TARGET_FPS_MEDIUM = 24;
+const TARGET_FPS_LOW = 30;
+
+const getPerformanceTier = (isMobile) => {
+  if (typeof window === 'undefined') return isMobile ? 'low' : 'medium';
+  const cores = window.navigator.hardwareConcurrency || 4;
+  const memory = window.navigator.deviceMemory || 4;
+  if (isMobile || cores <= 4 || memory <= 4) return 'low';
+  if (cores <= 8 || memory <= 8) return 'medium';
+  return 'high';
+};
 
 const getMotionValue = (value) => {
   if (value && typeof value.get === 'function') return value.get();
@@ -15,8 +27,8 @@ const getMotionValue = (value) => {
 };
 
 const createParticles = (count, width, height, isMobile) => {
-  const minSpeed = isMobile ? 0.08 : 0.12;
-  const maxSpeed = isMobile ? 0.34 : 0.48;
+  const minSpeed = isMobile ? 0.058 : 0.087;
+  const maxSpeed = isMobile ? 0.245 : 0.347;
   const particles = [];
 
   for (let index = 0; index < count; index += 1) {
@@ -35,7 +47,7 @@ const createParticles = (count, width, height, isMobile) => {
   return particles;
 };
 
-const ParticleField = ({ depth, theme = 'dark', isMobile = false, reduceMotion = false }) => {
+const ParticleField = ({ depth, isMobile = false, reduceMotion = false }) => {
   const canvasRef = useRef(null);
   const rafRef = useRef(0);
   const particlesRef = useRef([]);
@@ -46,34 +58,50 @@ const ParticleField = ({ depth, theme = 'dark', isMobile = false, reduceMotion =
     targetX: 0,
     targetY: 0,
   });
+  const lastFrameRef = useRef(0);
+  const pauseUntilRef = useRef(0);
 
   const particleCount = reduceMotion ? 0 : isMobile ? MOBILE_PARTICLES : DESKTOP_PARTICLES;
   const linkDistance = isMobile ? MOBILE_LINK_DISTANCE : DESKTOP_LINK_DISTANCE;
   const mouseRadius = isMobile ? MOBILE_MOUSE_RADIUS : DESKTOP_MOUSE_RADIUS;
   const mouseLinkDistance = isMobile ? MOBILE_MOUSE_LINK_DISTANCE : DESKTOP_MOUSE_LINK_DISTANCE;
-  const isDark = theme === 'dark';
-  const dotRgb = isDark ? '255, 255, 255' : '122, 24, 49';
-  const lineRgb = isDark ? '255, 255, 255' : '140, 38, 63';
-  const mouseGlowRgb = isDark ? '255,255,255' : '151,38,66';
+  const performanceTier = getPerformanceTier(isMobile);
+  const dotRgb = '120, 120, 120';
+  const lineRgb = '200, 200, 200';
+  const mouseGlowRgb = '160, 160, 160';
 
   const networkConfig = useMemo(
     () => ({
-      particleCount,
-      linkDistance,
-      mouseRadius,
-      mouseLinkDistance,
-      maxVelocity: isMobile ? 0.9 : 1.2,
-      attraction: isMobile ? 0.017 : 0.024,
-      pullLerp: isMobile ? 0.12 : 0.16,
-      lineAlpha: isDark ? (isMobile ? 0.2 : 0.26) : isMobile ? 0.12 : 0.16,
-      dotAlpha: isDark ? (isMobile ? 0.76 : 0.82) : isMobile ? 0.52 : 0.6,
+      particleCount:
+        performanceTier === 'low'
+          ? 0
+          : performanceTier === 'medium'
+            ? Math.max(12, Math.floor(particleCount * 0.576))
+            : particleCount,
+      linkDistance:
+        performanceTier === 'low' ? Math.floor(linkDistance * 0.8) : performanceTier === 'medium' ? Math.floor(linkDistance * 0.9) : linkDistance,
+      mouseRadius: performanceTier === 'low' ? Math.floor(mouseRadius * 0.82) : mouseRadius,
+      mouseLinkDistance:
+        performanceTier === 'low'
+          ? Math.floor(mouseLinkDistance * 0.82)
+          : performanceTier === 'medium'
+            ? Math.floor(mouseLinkDistance * 0.9)
+            : mouseLinkDistance,
+      maxVelocity: performanceTier === 'low' ? 0.6 : isMobile ? 0.65 : 0.85,
+      attraction: performanceTier === 'low' ? 0.012 : isMobile ? 0.014 : 0.02,
+      pullLerp: performanceTier === 'low' ? 0.1 : isMobile ? 0.12 : 0.16,
+      lineAlpha: isMobile ? 0.08 : 0.12,
+      dotAlpha: isMobile ? 0.44 : 0.54,
+      maxLinksPerParticle: performanceTier === 'low' ? 0 : performanceTier === 'medium' ? 4 : 6,
+      maxPixelRatio: performanceTier === 'low' ? 1 : performanceTier === 'medium' ? 1.1 : 1.25,
+      targetFps: performanceTier === 'low' ? TARGET_FPS_LOW : performanceTier === 'medium' ? TARGET_FPS_MEDIUM : TARGET_FPS_HIGH,
     }),
-    [isDark, isMobile, linkDistance, mouseLinkDistance, mouseRadius, particleCount],
+    [isMobile, linkDistance, mouseLinkDistance, mouseRadius, particleCount, performanceTier],
   );
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas || particleCount === 0) return undefined;
+    if (!canvas || networkConfig.particleCount === 0) return undefined;
 
     const context = canvas.getContext('2d');
     if (!context) return undefined;
@@ -82,22 +110,30 @@ const ParticleField = ({ depth, theme = 'dark', isMobile = false, reduceMotion =
     const resizeCanvas = () => {
       const width = canvas.clientWidth;
       const height = canvas.clientHeight;
-      const ratio = window.devicePixelRatio || 1;
+      const ratio = Math.min(window.devicePixelRatio || 1, networkConfig.maxPixelRatio);
       canvas.width = Math.floor(width * ratio);
       canvas.height = Math.floor(height * ratio);
       context.setTransform(ratio, 0, 0, ratio, 0, 0);
-      particlesRef.current = createParticles(particleCount, width, height, isMobile);
+      particlesRef.current = createParticles(networkConfig.particleCount, width, height, isMobile);
       pointer.x = width / 2;
       pointer.y = height / 2;
       pointer.targetX = width / 2;
       pointer.targetY = height / 2;
     };
 
-    const drawNetwork = () => {
+    const drawNetwork = (timestamp) => {
+      const frameInterval = 1000 / networkConfig.targetFps;
+      if (document.hidden || timestamp < pauseUntilRef.current || timestamp - lastFrameRef.current < frameInterval) {
+        rafRef.current = window.requestAnimationFrame(drawNetwork);
+        return;
+      }
+      const delta = Math.min((timestamp - lastFrameRef.current) / 16.67, 2);
+      lastFrameRef.current = timestamp;
+
       const width = canvas.clientWidth;
       const height = canvas.clientHeight;
-      const parallaxX = getMotionValue(depth?.x) * (isMobile ? 8 : 14);
-      const parallaxY = getMotionValue(depth?.y) * (isMobile ? 8 : 14);
+      const parallaxX = getMotionValue(depth?.x) * (isMobile ? 4 : 8);
+      const parallaxY = getMotionValue(depth?.y) * (isMobile ? 4 : 8);
 
       context.clearRect(0, 0, width, height);
 
@@ -120,8 +156,8 @@ const ParticleField = ({ depth, theme = 'dark', isMobile = false, reduceMotion =
           }
         }
 
-        particle.vx *= 0.986;
-        particle.vy *= 0.986;
+        particle.vx *= 0.988;
+        particle.vy *= 0.988;
 
         const velocity = Math.hypot(particle.vx, particle.vy);
         if (velocity > networkConfig.maxVelocity) {
@@ -129,8 +165,8 @@ const ParticleField = ({ depth, theme = 'dark', isMobile = false, reduceMotion =
           particle.vy = (particle.vy / velocity) * networkConfig.maxVelocity;
         }
 
-        particle.x += particle.vx;
-        particle.y += particle.vy;
+        particle.x += particle.vx * delta;
+        particle.y += particle.vy * delta;
 
         if (particle.x <= 0 || particle.x >= width) particle.vx *= -1;
         if (particle.y <= 0 || particle.y >= height) particle.vy *= -1;
@@ -139,27 +175,61 @@ const ParticleField = ({ depth, theme = 'dark', isMobile = false, reduceMotion =
         particle.y = Math.max(0, Math.min(height, particle.y));
       }
 
+      const cellSize = networkConfig.linkDistance;
+      const cellMap = new Map();
+
+      for (let index = 0; index < particles.length; index += 1) {
+        const particle = particles[index];
+        const cellX = Math.floor(particle.x / cellSize);
+        const cellY = Math.floor(particle.y / cellSize);
+        const key = `${cellX},${cellY}`;
+        const bucket = cellMap.get(key);
+        if (bucket) {
+          bucket.push(index);
+        } else {
+          cellMap.set(key, [index]);
+        }
+      }
+
       context.lineWidth = 1;
       for (let i = 0; i < particles.length; i += 1) {
         const particleA = particles[i];
         const pointAX = particleA.x + parallaxX;
         const pointAY = particleA.y + parallaxY;
+        const particleCellX = Math.floor(particleA.x / cellSize);
+        const particleCellY = Math.floor(particleA.y / cellSize);
+        let linkedCount = 0;
 
-        for (let j = i + 1; j < particles.length; j += 1) {
-          const particleB = particles[j];
-          const pointBX = particleB.x + parallaxX;
-          const pointBY = particleB.y + parallaxY;
-          const dx = pointAX - pointBX;
-          const dy = pointAY - pointBY;
-          const distance = Math.hypot(dx, dy);
+        for (let offsetX = -1; offsetX <= 1; offsetX += 1) {
+          for (let offsetY = -1; offsetY <= 1; offsetY += 1) {
+            const neighbor = cellMap.get(`${particleCellX + offsetX},${particleCellY + offsetY}`);
+            if (!neighbor) continue;
 
-          if (distance > networkConfig.linkDistance) continue;
-          const alpha = (1 - distance / networkConfig.linkDistance) * networkConfig.lineAlpha;
-          context.strokeStyle = `rgba(${lineRgb}, ${alpha.toFixed(4)})`;
-          context.beginPath();
-          context.moveTo(pointAX, pointAY);
-          context.lineTo(pointBX, pointBY);
-          context.stroke();
+            for (let k = 0; k < neighbor.length; k += 1) {
+              const j = neighbor[k];
+              if (j <= i) continue;
+
+              const particleB = particles[j];
+              const pointBX = particleB.x + parallaxX;
+              const pointBY = particleB.y + parallaxY;
+              const dx = pointAX - pointBX;
+              const dy = pointAY - pointBY;
+              const distance = Math.hypot(dx, dy);
+
+              if (distance > networkConfig.linkDistance) continue;
+              const alpha = (1 - distance / networkConfig.linkDistance) * networkConfig.lineAlpha;
+              context.strokeStyle = `rgba(${lineRgb}, ${alpha.toFixed(4)})`;
+              context.beginPath();
+              context.moveTo(pointAX, pointAY);
+              context.lineTo(pointBX, pointBY);
+              context.stroke();
+              linkedCount += 1;
+              if (linkedCount >= networkConfig.maxLinksPerParticle) break;
+            }
+
+            if (linkedCount >= networkConfig.maxLinksPerParticle) break;
+          }
+          if (linkedCount >= networkConfig.maxLinksPerParticle) break;
         }
 
         if (pointer.active) {
@@ -167,7 +237,7 @@ const ParticleField = ({ depth, theme = 'dark', isMobile = false, reduceMotion =
           const dyMouse = pointAY - pointer.y;
           const mouseDistance = Math.hypot(dxMouse, dyMouse);
           if (mouseDistance < networkConfig.mouseLinkDistance) {
-            const mouseAlpha = (1 - mouseDistance / networkConfig.mouseLinkDistance) * 0.38;
+            const mouseAlpha = (1 - mouseDistance / networkConfig.mouseLinkDistance) * 0.22;
             context.strokeStyle = `rgba(${lineRgb}, ${mouseAlpha.toFixed(4)})`;
             context.beginPath();
             context.moveTo(pointAX, pointAY);
@@ -189,7 +259,7 @@ const ParticleField = ({ depth, theme = 'dark', isMobile = false, reduceMotion =
 
       if (pointer.active) {
         const gradient = context.createRadialGradient(pointer.x, pointer.y, 0, pointer.x, pointer.y, networkConfig.mouseRadius);
-        gradient.addColorStop(0, `rgba(${mouseGlowRgb}, ${isDark ? '0.12' : '0.08'})`);
+        gradient.addColorStop(0, `rgba(${mouseGlowRgb}, 0.05)`);
         gradient.addColorStop(1, `rgba(${mouseGlowRgb}, 0)`);
         context.fillStyle = gradient;
         context.beginPath();
@@ -211,13 +281,19 @@ const ParticleField = ({ depth, theme = 'dark', isMobile = false, reduceMotion =
       pointer.active = false;
     };
 
+    const handleScroll = () => {
+      pauseUntilRef.current = performance.now() + 200;
+    };
+
     resizeCanvas();
-    drawNetwork();
+    lastFrameRef.current = performance.now();
+    drawNetwork(lastFrameRef.current);
 
     window.addEventListener('pointermove', handlePointerMove, { passive: true });
     window.addEventListener('pointerleave', handlePointerLeave);
     window.addEventListener('blur', handlePointerLeave);
-    window.addEventListener('resize', resizeCanvas);
+    window.addEventListener('resize', resizeCanvas, { passive: true });
+    window.addEventListener('scroll', handleScroll, { passive: true });
 
     return () => {
       if (rafRef.current) {
@@ -227,10 +303,11 @@ const ParticleField = ({ depth, theme = 'dark', isMobile = false, reduceMotion =
       window.removeEventListener('pointerleave', handlePointerLeave);
       window.removeEventListener('blur', handlePointerLeave);
       window.removeEventListener('resize', resizeCanvas);
+      window.removeEventListener('scroll', handleScroll);
     };
-  }, [depth, dotRgb, isDark, isMobile, lineRgb, mouseGlowRgb, networkConfig, particleCount]);
+  }, [depth, dotRgb, isMobile, lineRgb, mouseGlowRgb, networkConfig]);
 
-  if (!particleCount) return null;
+  if (!networkConfig.particleCount) return null;
 
   return <canvas ref={canvasRef} className="particle-network-canvas absolute inset-0 h-full w-full" />;
 };
