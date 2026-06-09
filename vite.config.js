@@ -1,24 +1,29 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
-const repositoryName = process.env.GITHUB_REPOSITORY?.split('/')[1] || '';
-const isGithubActions = process.env.GITHUB_ACTIONS === 'true';
-const base = isGithubActions && repositoryName ? `/${repositoryName}/` : '/';
-
 export default defineConfig({
   plugins: [react()],
-  base,
   resolve: {
     // Force a single React instance — fixes R3F "__SECRET_INTERNALS" error
-    dedupe: ['react', 'react-dom', '@react-three/fiber'],
+    dedupe: ['react', 'react-dom', 'three', '@react-three/fiber', '@react-three/drei'],
   },
   build: {
     rollupOptions: {
       output: {
-        manualChunks: {
-          three: ['three', '@react-three/fiber', '@react-three/drei'],
-          gsap: ['gsap'],
-          vendor: ['react', 'react-dom', 'framer-motion'],
+        manualChunks(id) {
+          // Keep react ecosystem in ONE chunk so R3F finds the same React instance
+          if (id.includes('node_modules/react') || id.includes('node_modules/react-dom') || id.includes('node_modules/scheduler')) {
+            return 'react-vendor';
+          }
+          if (id.includes('node_modules/three') || id.includes('node_modules/@react-three')) {
+            return 'three-vendor';
+          }
+          if (id.includes('node_modules/gsap')) {
+            return 'gsap-vendor';
+          }
+          if (id.includes('node_modules/framer-motion')) {
+            return 'motion-vendor';
+          }
         },
       },
     },
