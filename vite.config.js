@@ -8,6 +8,10 @@ const base = isGithubActions && repositoryName ? `/${repositoryName}/` : '/';
 export default defineConfig({
   plugins: [react()],
   base,
+  resolve: {
+    // Force a single React instance — fixes R3F "__SECRET_INTERNALS" error
+    dedupe: ['react', 'react-dom', '@react-three/fiber'],
+  },
   build: {
     rollupOptions: {
       output: {
