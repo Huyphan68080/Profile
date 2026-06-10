@@ -12,22 +12,22 @@ export default {
         cyanSoft: '#d4d4d8',
         accent: '#e4e4e7',
         zinc: {
-          50: '#f8fafc',
-          100: '#f1f5f9',
-          200: '#e2e8f0',
-          300: '#cbd5e1',
-          400: '#94a3b8',
-          500: '#64748b',
-          600: '#475569',
-          700: '#334155',
-          800: '#1e293b',
-          900: '#111111',
-          950: '#0f172a',
+          50: '#f9fafb',
+          100: '#f3f4f6',
+          200: '#e5e7eb',
+          300: '#d1d5db',
+          400: '#4b5563', // Darkened to rich gray-600 for light mode contrast
+          500: '#374151', // Darkened to rich gray-700 for light mode contrast
+          600: '#1f2937', // Darkened to rich gray-800 for light mode contrast
+          700: '#111827', // Darkened to rich gray-900 for light mode contrast
+          800: '#030712', // Darkened to rich gray-950 for light mode contrast
+          900: '#000000',
+          950: '#000000',
         },
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-        display: ['Orbitron', 'Inter', 'sans-serif'],
+        sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+        display: ['"Space Grotesk"', 'sans-serif'],
       },
       boxShadow: {
         neon: '0 0 16px rgba(113, 113, 122, 0.15), 0 0 32px rgba(161, 161, 170, 0.08)',

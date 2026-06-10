@@ -1,21 +1,21 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Orbitron:wght@500;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Space+Grotesk:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --bg-base: #e5e5ea; /* refined muted cool minimal gray */
-  --text-main: #111111; /* crisp dark gray/black */
-  --text-muted: #334155; /* refined dark slate/gray */
-  --surface: rgba(255, 255, 255, 0.12);
-  --surface-strong: rgba(255, 255, 255, 0.25);
-  --surface-soft: rgba(255, 255, 255, 0.08);
-  --surface-border: rgba(0, 0, 0, 0.05);
-  --surface-border-strong: rgba(0, 0, 0, 0.1);
-  --surface-glow: rgba(255, 255, 255, 0.15);
-  --mouse-glow: rgba(0, 0, 0, 0.02);
-  --panel-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
+  --bg-base: #f4f4f7; /* clean, premium light-gray background */
+  --text-main: #0c0c0e; /* rich near-black */
+  --text-muted: #27272a; /* dark charcoal zinc-800 */
+  --surface: rgba(255, 255, 255, 0.70); /* clear white glass card for readability */
+  --surface-strong: rgba(255, 255, 255, 0.85); /* more solid white */
+  --surface-soft: rgba(255, 255, 255, 0.45);
+  --surface-border: rgba(0, 0, 0, 0.08); /* slightly stronger border for clean structure */
+  --surface-border-strong: rgba(0, 0, 0, 0.15);
+  --surface-glow: rgba(255, 255, 255, 0.25);
+  --mouse-glow: rgba(0, 0, 0, 0.03);
+  --panel-shadow: 0 12px 30px rgba(0, 0, 0, 0.05); /* softer modern shadow */
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -36,7 +36,7 @@ body {
   margin: 0;
   background: var(--bg-base);
   color: var(--text-main);
-  font-family: 'Inter', sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
   text-rendering: optimizeLegibility;
   overflow-x: hidden;
 }
@@ -47,7 +47,7 @@ button { color: inherit; }
 .app-shell { isolation: isolate; }
 
 .cyber-title {
-  font-family: 'Orbitron', sans-serif;
+  font-family: 'Space Grotesk', sans-serif;
   letter-spacing: 0.05em;
 }
 
