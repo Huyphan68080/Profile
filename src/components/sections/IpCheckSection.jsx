@@ -36,9 +36,9 @@ const IpCheckSection = ({ visitorInsights }) => {
   const [activeMetric, setActiveMetric] = useState('net'); // 'net', 'cpu', 'ram'
   const [isLiveSystemData, setIsLiveSystemData] = useState(false);
   const [systemSpec, setSystemSpec] = useState({
-    cpuModel: 'Intel Core Processor',
+    cpuModel: '13th Gen Intel(R) Core(TM) i5-13420H',
     totalMemGB: 16,
-    netName: 'Local Network'
+    netName: 'Wi-Fi'
   });
   const [chartData, setChartData] = useState({
     net: Array.from({ length: 20 }, () => Math.floor(30 + Math.random() * 25)),
@@ -479,14 +479,12 @@ const IpCheckSection = ({ visitorInsights }) => {
                     <span className="inline-block h-2 w-2 rounded-full animate-pulse" style={{ backgroundColor: config.color }} />
                     {config.name}
                   </h3>
-                  {isLiveSystemData && (
-                    <p className="text-[10px] font-mono text-zinc-500 dark:text-zinc-400 mt-0.5 pl-4 flex items-center gap-1">
-                      <span className="opacity-50">//</span>
-                      {activeMetric === 'cpu' && `Hardware: ${systemSpec.cpuModel}`}
-                      {activeMetric === 'ram' && `Memory Capacity: ${systemSpec.totalMemGB} GB`}
-                      {activeMetric === 'net' && `Network Connection: ${systemSpec.netName}`}
-                    </p>
-                  )}
+                  <p className="text-[10px] font-mono text-zinc-500 dark:text-zinc-400 mt-0.5 pl-4 flex items-center gap-1">
+                    <span className="opacity-50">//</span>
+                    {activeMetric === 'cpu' && `Hardware: ${systemSpec.cpuModel}`}
+                    {activeMetric === 'ram' && `Memory Capacity: ${systemSpec.totalMemGB} GB`}
+                    {activeMetric === 'net' && `Network Connection: ${systemSpec.netName}`}
+                  </p>
                 </div>
                 
                 <div className="flex items-center gap-3">
