@@ -35,6 +35,7 @@ const IpCheckSection = ({ visitorInsights }) => {
 
   const [activeMetric, setActiveMetric] = useState('net'); // 'net', 'cpu', 'ram'
   const [isLiveSystemData, setIsLiveSystemData] = useState(false);
+  // Default hardware specifications fallback for production static deployments
   const [systemSpec, setSystemSpec] = useState({
     cpuModel: '13th Gen Intel(R) Core(TM) i5-13420H',
     totalMemGB: 16,
