@@ -36,7 +36,7 @@ const SkillItem = ({ skill }) => {
   }, [skill.level]);
 
   return (
-    <div className="group/item relative flex items-center gap-2.5 sm:gap-3 rounded-xl border border-zinc-200/50 bg-white/60 p-2 sm:p-2.5 transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/85 hover:shadow-[0_4px_12px_rgba(0,0,0,0.02)]">
+    <div className="group/item relative flex items-center gap-2.5 sm:gap-3 rounded-xl border border-zinc-200/50 bg-white/20 p-2 sm:p-2.5 transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/40 hover:shadow-[0_4px_12px_rgba(0,0,0,0.02)]">
       {/* Icon container with hover scale and rotate */}
       <div className="flex h-7 w-7 sm:h-8 sm:w-8 shrink-0 items-center justify-center rounded-lg bg-zinc-800/5 transition-all duration-300 group-hover/item:scale-105 group-hover/item:bg-zinc-800/10">
         {Icon && <Icon className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-zinc-700 transition-transform duration-300 group-hover/item:rotate-6" />}
@@ -79,8 +79,8 @@ const CategoryCard = ({ category, isActive, layout = 'horizontal', badgeText, on
     <div 
       className={`group/card bento-item glass-panel rounded-[1.4rem] p-4 sm:p-5 relative transition-all duration-300 transform ${containerClass} ${
         isActive 
-          ? 'border-zinc-400 bg-white/[0.85] shadow-[0_12px_40px_rgba(24,24,27,0.06),_inset_0_0_12px_rgba(24,24,27,0.02)] scale-[1.01]' 
-          : 'border-zinc-200/60 bg-white/[0.75] hover:border-zinc-300 hover:bg-white/[0.85] hover:shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:scale-[1.005]'
+          ? 'border-zinc-400 bg-white/[0.42] shadow-[0_12px_40px_rgba(24,24,27,0.06),_inset_0_0_12px_rgba(24,24,27,0.02)] scale-[1.01]' 
+          : 'border-zinc-200/60 bg-white/[0.28] hover:border-zinc-300 hover:bg-white/[0.34] hover:shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:scale-[1.005]'
       }`}
       style={{ backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)' }}
       onMouseEnter={onHover}
@@ -391,7 +391,7 @@ const SkillsSection = () => {
           {/* Left Column: Interactive Radar Chart */}
           <div className="hidden lg:flex lg:col-span-5 justify-center items-center">
             <div 
-              className="skills-radar-chart glass-panel p-4 pt-6 pb-6 rounded-[1.5rem] w-full max-w-[320px] aspect-square flex items-center justify-center bg-white/[0.75] transition-all duration-300 border-zinc-200/60 relative group"
+              className="skills-radar-chart glass-panel p-4 pt-6 pb-6 rounded-[1.5rem] w-full max-w-[320px] aspect-square flex items-center justify-center bg-white/[0.28] transition-all duration-300 border-zinc-200/60 relative group"
               style={{ backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)' }}
             >
               {/* Corner blueprint brackets */}

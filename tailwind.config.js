@@ -17,18 +17,18 @@ export default {
           100: '#f3f4f6',
           200: '#e5e7eb',
           300: '#d1d5db',
-          400: '#4b5563', // Darkened to rich gray-600 for light mode contrast
-          500: '#374151', // Darkened to rich gray-700 for light mode contrast
-          600: '#1f2937', // Darkened to rich gray-800 for light mode contrast
-          700: '#111827', // Darkened to rich gray-900 for light mode contrast
-          800: '#030712', // Darkened to rich gray-950 for light mode contrast
+          400: '#1e293b', // Mapped to very dark slate-800 for maximum readability
+          500: '#0f172a', // Mapped to slate-900 for high contrast
+          600: '#020617', // Mapped to slate-950
+          700: '#000000', // Pure black
+          800: '#000000',
           900: '#000000',
           950: '#000000',
         },
       },
       fontFamily: {
-        sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
-        display: ['"Space Grotesk"', 'sans-serif'],
+        sans: ['"Outfit"', 'system-ui', 'sans-serif'],
+        display: ['"Sora"', 'sans-serif'],
       },
       boxShadow: {
         neon: '0 0 16px rgba(113, 113, 122, 0.15), 0 0 32px rgba(161, 161, 170, 0.08)',

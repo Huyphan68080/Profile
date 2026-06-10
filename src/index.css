@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Sora:wght@400;500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,11 +6,11 @@
 
 :root {
   --bg-base: #f4f4f7; /* clean, premium light-gray background */
-  --text-main: #0c0c0e; /* rich near-black */
-  --text-muted: #27272a; /* dark charcoal zinc-800 */
-  --surface: rgba(255, 255, 255, 0.70); /* clear white glass card for readability */
-  --surface-strong: rgba(255, 255, 255, 0.85); /* more solid white */
-  --surface-soft: rgba(255, 255, 255, 0.45);
+  --text-main: #020617; /* pitch black */
+  --text-muted: #0f172a; /* very dark charcoal zinc-900 equivalent */
+  --surface: rgba(255, 255, 255, 0.28); /* reverted back to original transparent card */
+  --surface-strong: rgba(255, 255, 255, 0.38); /* reverted back */
+  --surface-soft: rgba(255, 255, 255, 0.18); /* reverted back */
   --surface-border: rgba(0, 0, 0, 0.08); /* slightly stronger border for clean structure */
   --surface-border-strong: rgba(0, 0, 0, 0.15);
   --surface-glow: rgba(255, 255, 255, 0.25);
@@ -36,7 +36,7 @@ body {
   margin: 0;
   background: var(--bg-base);
   color: var(--text-main);
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'Outfit', sans-serif;
   text-rendering: optimizeLegibility;
   overflow-x: hidden;
 }
@@ -47,7 +47,7 @@ button { color: inherit; }
 .app-shell { isolation: isolate; }
 
 .cyber-title {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: 'Sora', sans-serif;
   letter-spacing: 0.05em;
 }
 

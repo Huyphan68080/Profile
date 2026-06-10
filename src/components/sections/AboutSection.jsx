@@ -61,7 +61,7 @@ const AboutSection = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-stretch flex-1 overflow-visible lg:overflow-hidden w-full">
           {/* Column 1 (Bio Dossier Card) */}
-          <div className="group/card bento-item glass-panel rounded-[1.4rem] p-4 sm:p-5 flex flex-col justify-between relative overflow-hidden bg-white/[0.75] hover:bg-white/[0.85] hover:border-zinc-300 hover:shadow-[0_8px_30px_rgba(0,0,0,0.04)] transition-all duration-300">
+          <div className="group/card bento-item glass-panel rounded-[1.4rem] p-4 sm:p-5 flex flex-col justify-between relative overflow-hidden bg-white/[0.28] hover:bg-white/[0.34] hover:border-zinc-300 hover:shadow-[0_8px_30px_rgba(0,0,0,0.04)] transition-all duration-300">
             {/* Corner decorative blueprint brackets */}
             <div className="absolute top-0 left-0 w-2.5 h-2.5 border-t border-l border-zinc-300 opacity-60 group-hover/card:opacity-100 transition-opacity duration-300" />
             <div className="absolute top-0 right-0 w-2.5 h-2.5 border-t border-r border-zinc-300 opacity-60 group-hover/card:opacity-100 transition-opacity duration-300" />
@@ -96,7 +96,7 @@ const AboutSection = () => {
           </div>
 
           {/* Column 2 (Timeline Card) */}
-          <div className="group/card bento-item timeline-container glass-panel rounded-[1.4rem] p-4 sm:p-5 flex flex-col relative overflow-hidden bg-white/[0.75] hover:bg-white/[0.85] hover:border-zinc-300 hover:shadow-[0_8px_30px_rgba(0,0,0,0.04)] transition-all duration-300">
+          <div className="group/card bento-item timeline-container glass-panel rounded-[1.4rem] p-4 sm:p-5 flex flex-col relative overflow-hidden bg-white/[0.28] hover:bg-white/[0.34] hover:border-zinc-300 hover:shadow-[0_8px_30px_rgba(0,0,0,0.04)] transition-all duration-300">
             {/* Corner decorative blueprint brackets */}
             <div className="absolute top-0 left-0 w-2.5 h-2.5 border-t border-l border-zinc-300 opacity-60 group-hover/card:opacity-100 transition-opacity duration-300" />
             <div className="absolute top-0 right-0 w-2.5 h-2.5 border-t border-r border-zinc-300 opacity-60 group-hover/card:opacity-100 transition-opacity duration-300" />

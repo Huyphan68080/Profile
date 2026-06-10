@@ -82,7 +82,7 @@ const ContactSection = () => {
 
             <div className="grid gap-3 w-full">
               {/* Info Details Card */}
-              <article className="group contact-info glass-panel rounded-[1.4rem] border border-zinc-200/60 p-4 sm:p-5 relative bg-white/[0.80] hover:bg-white/[0.90] hover:border-zinc-300 hover:shadow-[0_8px_30px_rgba(0,0,0,0.04)] transition-all duration-300">
+              <article className="group contact-info glass-panel rounded-[1.4rem] border border-zinc-200/60 p-4 sm:p-5 relative bg-white/[0.60] hover:bg-white/[0.68] hover:border-zinc-300 hover:shadow-[0_8px_30px_rgba(0,0,0,0.04)] transition-all duration-300">
                 {/* Corner decorative blueprint brackets */}
                 <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-zinc-300 opacity-60 group-hover:opacity-100 transition-opacity duration-300" />
                 <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-zinc-300 opacity-60 group-hover:opacity-100 transition-opacity duration-300" />
@@ -109,7 +109,7 @@ const ContactSection = () => {
               </article>
 
               {/* Social Channels Card */}
-              <article className="group contact-info glass-panel rounded-[1.4rem] border border-zinc-200/60 p-4 sm:p-5 relative bg-white/[0.80] hover:bg-white/[0.90] hover:border-zinc-300 hover:shadow-[0_8px_30px_rgba(0,0,0,0.04)] transition-all duration-300">
+              <article className="group contact-info glass-panel rounded-[1.4rem] border border-zinc-200/60 p-4 sm:p-5 relative bg-white/[0.60] hover:bg-white/[0.68] hover:border-zinc-300 hover:shadow-[0_8px_30px_rgba(0,0,0,0.04)] transition-all duration-300">
                 {/* Corner decorative blueprint brackets */}
                 <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-zinc-300 opacity-60 group-hover:opacity-100 transition-opacity duration-300" />
                 <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-zinc-300 opacity-60 group-hover:opacity-100 transition-opacity duration-300" />
@@ -130,7 +130,7 @@ const ContactSection = () => {
                       href={item.href}
                       target="_blank"
                       rel="noreferrer"
-                      className="rounded-xl border border-zinc-200 bg-white/70 px-3 py-1.5 text-xs text-zinc-700 font-medium transition-all duration-300 hover:-translate-y-0.5 hover:border-zinc-800 hover:bg-zinc-900 hover:text-white hover:shadow-[0_4px_12px_rgba(0,0,0,0.1)]"
+                      className="rounded-xl border border-zinc-200 bg-white/40 px-3 py-1.5 text-xs text-zinc-700 font-medium transition-all duration-300 hover:-translate-y-0.5 hover:border-zinc-800 hover:bg-zinc-900 hover:text-white hover:shadow-[0_4px_12px_rgba(0,0,0,0.1)]"
                     >
                       {item.label}
                     </a>
@@ -143,7 +143,7 @@ const ContactSection = () => {
           {/* Right — Diagnostic Transmitter Form */}
           <form
             onSubmit={handleSubmit}
-            className="group/form contact-form glass-panel rounded-[1.4rem] border border-zinc-200/60 p-4 sm:p-5 relative bg-white/[0.85] hover:bg-white/[0.92] hover:border-zinc-300 hover:shadow-[0_12px_40px_rgba(0,0,0,0.06)] transition-all duration-300"
+            className="group/form contact-form glass-panel rounded-[1.4rem] border border-zinc-200/60 p-4 sm:p-5 relative bg-white/[0.72] hover:bg-white/[0.78] hover:border-zinc-300 hover:shadow-[0_12px_40px_rgba(0,0,0,0.06)] transition-all duration-300"
           >
             {/* Corner decorative blueprint brackets */}
             <div className="absolute top-0 left-0 w-2.5 h-2.5 border-t border-l border-zinc-300 opacity-60 group-hover/form:opacity-100 transition-opacity duration-300" />
@@ -165,7 +165,7 @@ const ContactSection = () => {
                   name="name"
                   required
                   disabled={formStatus === 'submitting' || formStatus === 'success'}
-                  className="w-full rounded-xl border border-zinc-200/60 bg-white/60 px-3.5 py-2.5 text-base md:text-sm text-zinc-900 placeholder:text-zinc-400 outline-none transition-all duration-300 focus:border-zinc-800 focus:bg-white/85 focus:shadow-[0_4px_12px_rgba(0,0,0,0.02)] disabled:opacity-50"
+                  className="w-full rounded-xl border border-zinc-200/60 bg-white/20 px-3.5 py-2.5 text-base md:text-sm text-zinc-900 placeholder:text-zinc-400 outline-none transition-all duration-300 focus:border-zinc-800 focus:bg-white/40 focus:shadow-[0_4px_12px_rgba(0,0,0,0.02)] disabled:opacity-50"
                   placeholder="Your name"
                 />
               </label>
@@ -176,7 +176,7 @@ const ContactSection = () => {
                   name="email"
                   required
                   disabled={formStatus === 'submitting' || formStatus === 'success'}
-                  className="w-full rounded-xl border border-zinc-200/60 bg-white/60 px-3.5 py-2.5 text-base md:text-sm text-zinc-900 placeholder:text-zinc-400 outline-none transition-all duration-300 focus:border-zinc-800 focus:bg-white/85 focus:shadow-[0_4px_12px_rgba(0,0,0,0.02)] disabled:opacity-50"
+                  className="w-full rounded-xl border border-zinc-200/60 bg-white/20 px-3.5 py-2.5 text-base md:text-sm text-zinc-900 placeholder:text-zinc-400 outline-none transition-all duration-300 focus:border-zinc-800 focus:bg-white/40 focus:shadow-[0_4px_12px_rgba(0,0,0,0.02)] disabled:opacity-50"
                   placeholder="you@email.com"
                 />
               </label>
@@ -188,7 +188,7 @@ const ContactSection = () => {
                 required
                 rows={3}
                 disabled={formStatus === 'submitting' || formStatus === 'success'}
-                className="w-full rounded-xl border border-zinc-200/60 bg-white/60 px-3.5 py-2.5 text-base md:text-sm text-zinc-900 placeholder:text-zinc-400 outline-none transition-all duration-300 focus:border-zinc-800 focus:bg-white/85 focus:shadow-[0_4px_12px_rgba(0,0,0,0.02)] disabled:opacity-50"
+                className="w-full rounded-xl border border-zinc-200/60 bg-white/20 px-3.5 py-2.5 text-base md:text-sm text-zinc-900 placeholder:text-zinc-400 outline-none transition-all duration-300 focus:border-zinc-800 focus:bg-white/40 focus:shadow-[0_4px_12px_rgba(0,0,0,0.02)] disabled:opacity-50"
                 placeholder="Describe your project or idea..."
               />
             </label>
