@@ -40,26 +40,25 @@ const ContactSection = () => {
     e.preventDefault();
     setFormStatus('submitting');
     
-    // Formspree/EmailJS placeholder integration (feel free to swap in your Formspree ID)
-    // const formData = new FormData(e.target);
-    // try {
-    //   const response = await fetch('https://formspree.io/f/YOUR_FORM_ID', {
-    //     method: 'POST',
-    //     body: formData,
-    //     headers: { Accept: 'application/json' }
-    //   });
-    //   if (response.ok) setFormStatus('success');
-    //   else setFormStatus('error');
-    // } catch (error) {
-    //   setFormStatus('error');
-    // }
-
-    // Mock network request
-    setTimeout(() => {
-      setFormStatus('success');
-      e.target.reset();
-      setTimeout(() => setFormStatus('idle'), 4000);
-    }, 1500);
+    const formData = new FormData(e.target);
+    try {
+      const response = await fetch('https://formspree.io/f/xwvjqdkw', {
+        method: 'POST',
+        body: formData,
+        headers: { Accept: 'application/json' }
+      });
+      if (response.ok) {
+        setFormStatus('success');
+        e.target.reset();
+        setTimeout(() => setFormStatus('idle'), 5000);
+      } else {
+        setFormStatus('error');
+        setTimeout(() => setFormStatus('idle'), 5000);
+      }
+    } catch (error) {
+      setFormStatus('error');
+      setTimeout(() => setFormStatus('idle'), 5000);
+    }
   };
 
   return (
