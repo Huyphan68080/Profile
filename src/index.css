@@ -6,8 +6,8 @@
 
 :root {
   --bg-base: #f4f4f7; /* clean, premium light-gray background */
-  --text-main: #020617; /* pitch black */
-  --text-muted: #0f172a; /* very dark charcoal zinc-900 equivalent */
+  --text-main: #000000; /* pure black */
+  --text-muted: #000000; /* pure black */
   --surface: rgba(255, 255, 255, 0.28); /* reverted back to original transparent card */
   --surface-strong: rgba(255, 255, 255, 0.38); /* reverted back */
   --surface-soft: rgba(255, 255, 255, 0.18); /* reverted back */

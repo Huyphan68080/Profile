@@ -17,10 +17,10 @@ export default {
           100: '#f3f4f6',
           200: '#e5e7eb',
           300: '#d1d5db',
-          400: '#1e293b', // Mapped to very dark slate-800 for maximum readability
-          500: '#0f172a', // Mapped to slate-900 for high contrast
-          600: '#020617', // Mapped to slate-950
-          700: '#000000', // Pure black
+          400: '#000000', // Force all text elements to pure black
+          500: '#000000',
+          600: '#000000',
+          700: '#000000',
           800: '#000000',
           900: '#000000',
           950: '#000000',
