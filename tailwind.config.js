@@ -27,8 +27,8 @@ export default {
         },
       },
       fontFamily: {
-        sans: ['"Outfit"', 'system-ui', 'sans-serif'],
-        display: ['"Sora"', 'sans-serif'],
+        sans: ['"Delius"', 'cursive', 'sans-serif'],
+        display: ['"Delius"', 'cursive', 'sans-serif'],
       },
       boxShadow: {
         neon: '0 0 16px rgba(113, 113, 122, 0.15), 0 0 32px rgba(161, 161, 170, 0.08)',
