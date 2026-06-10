@@ -43,8 +43,8 @@ const SkillItem = ({ skill }) => {
       </div>
       <div className="flex-1 min-w-0">
         <div className="flex items-center justify-between gap-1">
-          <span className="text-[11.5px] sm:text-[12.5px] font-semibold text-zinc-800 truncate">{skill.name}</span>
-          <span ref={counterRef} className="text-[11px] sm:text-[12px] font-mono font-bold text-zinc-800 shrink-0">0%</span>
+          <span className="text-[16px] sm:text-[17px] font-semibold text-zinc-800 truncate">{skill.name}</span>
+          <span ref={counterRef} className="text-[15.5px] sm:text-[16.5px] font-mono font-bold text-zinc-800 shrink-0">0%</span>
         </div>
         <div className="mt-1 h-[3px] w-full overflow-hidden rounded-full bg-zinc-200/60">
           <div
@@ -69,7 +69,7 @@ const CategoryCard = ({ category, isActive, layout = 'horizontal', badgeText, on
 
   const titleColClass = layout === 'horizontal'
     ? 'md:col-span-4 lg:col-span-3 relative pr-2'
-    : 'w-full relative pb-1';
+    : 'w-full relative pb-1 pr-28';
 
   const skillsColClass = layout === 'horizontal'
     ? 'md:col-span-8 lg:col-span-9 grid grid-cols-2 sm:grid-cols-3 gap-2.5'
@@ -97,19 +97,19 @@ const CategoryCard = ({ category, isActive, layout = 'horizontal', badgeText, on
 
       {/* Tech Category Badge */}
       {badgeText && (
-        <span className="absolute top-4 right-4 text-[7.5px] font-mono tracking-[0.25em] text-zinc-400 uppercase bg-zinc-800/5 px-2 py-0.5 rounded-md border border-zinc-200/50">
+        <span className="absolute top-4 right-4 text-[11.5px] font-mono tracking-[0.25em] text-zinc-400 uppercase bg-zinc-800/5 px-2 py-0.5 rounded-md border border-zinc-200/50">
           {badgeText}
         </span>
       )}
 
       {/* Left/Top Column: Category title */}
       <div className={titleColClass}>
-        <h3 className="cyber-title text-[10px] sm:text-[11px] uppercase tracking-[0.25em] text-zinc-800 font-extrabold flex items-center gap-1.5">
+        <h3 className="cyber-title text-[14.5px] sm:text-[15.5px] uppercase tracking-[0.25em] text-zinc-800 font-extrabold flex items-center gap-1.5">
           <span className={`h-1.5 w-1.5 rounded-full bg-zinc-800 transition-all duration-300 ${isActive ? 'scale-125 bg-zinc-950 shadow-[0_0_6px_rgba(24,24,27,0.4)]' : 'opacity-40'}`} />
           {category.title}
         </h3>
         {category.desc && (
-          <p className="mt-2 text-[11px] leading-relaxed text-zinc-500/90 hidden md:block">
+          <p className="mt-2 text-[15px] leading-relaxed text-zinc-500/90 hidden md:block">
             {category.desc}
           </p>
         )}
@@ -401,18 +401,18 @@ const SkillsSection = () => {
               <div className="absolute bottom-0 right-0 w-3 h-3 border-b border-r border-zinc-300" />
 
               {/* Corner telemetry accents */}
-              <div className="absolute top-2 left-3 font-mono text-[7px] text-zinc-400 tracking-wider">
-                SYS_COORD: 10.7626° N, 106.6602° E
+              <div className="absolute top-2 left-3 font-mono text-[11px] text-zinc-400 tracking-wider">
+                COORD: 10.76° N, 106.66° E
               </div>
-              <div className="absolute top-2 right-3 font-mono text-[7px] text-zinc-400 tracking-wider flex items-center gap-1">
+              <div className="absolute top-2 right-3 font-mono text-[11px] text-zinc-400 tracking-wider flex items-center gap-1">
                 <span className="h-1 w-1 rounded-full bg-emerald-500 animate-ping" />
-                STATUS: ACTIVE_SCAN
+                STATUS: ACTIVE
               </div>
-              <div className="absolute bottom-2 left-3 font-mono text-[7px] text-zinc-400 tracking-wider">
-                FREQ: 2.40 GHz // CH_V: 1.0.3
+              <div className="absolute bottom-2 left-3 font-mono text-[11px] text-zinc-400 tracking-wider">
+                FREQ: 2.40 GHz
               </div>
-              <div className="absolute bottom-2 right-3 font-mono text-[7px] text-zinc-400 tracking-wider">
-                RANGE: 75m // BEAM: STABLE
+              <div className="absolute bottom-2 right-3 font-mono text-[11px] text-zinc-400 tracking-wider">
+                BEAM: STABLE
               </div>
 
               <RadarChart activeCategory={hoveredCategory} onHoverCategory={setHoveredCategory} />

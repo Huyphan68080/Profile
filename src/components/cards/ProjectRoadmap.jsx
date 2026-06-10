@@ -69,8 +69,8 @@ const ProjectRoadmap = () => {
       <div>
         {/* Header */}
         <div className="flex items-center justify-between border-b border-zinc-200/50 dark:border-zinc-800/50 pb-2 mb-3.5">
-          <h3 className="cyber-title text-[9px] uppercase tracking-[0.24em] text-zinc-500 dark:text-zinc-400 font-extrabold">System Roadmap</h3>
-          <span className="font-mono text-[7px] text-zinc-400 dark:text-zinc-500 uppercase tracking-widest">[ FUTURISTIC_2026 ]</span>
+          <h3 className="cyber-title text-[11px] uppercase tracking-[0.24em] text-zinc-500 dark:text-zinc-400 font-extrabold">System Roadmap</h3>
+          <span className="font-mono text-[9px] text-zinc-400 dark:text-zinc-500 uppercase tracking-widest">[ FUTURISTIC_2026 ]</span>
         </div>
 
         {/* Roadmap Items */}
@@ -78,14 +78,14 @@ const ProjectRoadmap = () => {
           {roadmapItems.map((item) => (
             <div key={item.name} className="relative flex flex-col">
               <div className="flex items-center justify-between gap-1.5">
-                <span className="text-[11px] sm:text-[11.5px] font-bold text-zinc-800 dark:text-zinc-200 truncate leading-tight">
+                <span className="text-[15.5px] sm:text-[16px] font-bold text-zinc-800 dark:text-zinc-200 truncate leading-tight">
                   {item.name}
                 </span>
-                <span className={`rounded-md border px-1.5 py-0.2 text-[6.5px] font-mono uppercase tracking-[0.15em] ${item.badgeColor} shrink-0`}>
+                <span className={`rounded-md border px-1.5 py-0.2 text-[8.5px] font-mono uppercase tracking-[0.15em] ${item.badgeColor} shrink-0`}>
                   {item.status}
                 </span>
               </div>
-              <p className="mt-1 text-[9.5px] leading-relaxed text-zinc-500 dark:text-zinc-400">
+              <p className="mt-1 text-[13.5px] leading-relaxed text-zinc-500 dark:text-zinc-400">
                 {item.desc}
               </p>
               
@@ -106,7 +106,7 @@ const ProjectRoadmap = () => {
       </div>
 
       {/* Footer */}
-      <div className="border-t border-zinc-200/50 dark:border-zinc-800/50 pt-2.5 mt-4 flex items-center justify-between font-mono text-[7px] text-zinc-400 dark:text-zinc-500 tracking-wider">
+      <div className="border-t border-zinc-200/50 dark:border-zinc-800/50 pt-2.5 mt-4 flex items-center justify-between font-mono text-[9px] text-zinc-400 dark:text-zinc-500 tracking-wider">
         <span>GATEWAY: ACTIVE</span>
         <span>BUILD_V: 1.0.8</span>
       </div>

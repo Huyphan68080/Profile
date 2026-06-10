@@ -179,10 +179,13 @@ const getSpotifyLabel = (spotify) => {
 };
 
 const getCustomStatusLabel = (activities) => {
-  const customActivity = activities.find((activity) => activity?.type === 4 && typeof activity.state === 'string');
-  const customText = customActivity?.state?.trim();
-  if (!customText) return '';
-  return `Custom: ${customText}`;
+  const customActivity = activities.find((activity) => activity?.type === 4);
+  if (!customActivity) return '';
+
+  const emojiStr = customActivity.emoji?.name ? `${customActivity.emoji.name} ` : '';
+  const textStr = customActivity.state?.trim() || '';
+
+  return (emojiStr + textStr).trim();
 };
 
 const getGenericActivityLabel = (activity) => {

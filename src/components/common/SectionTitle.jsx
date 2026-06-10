@@ -44,11 +44,11 @@ const SectionTitle = ({ kicker, title, subtitle, align = 'left', className = '',
 
   return (
     <div ref={containerRef} className={`${compact ? 'mb-3' : 'mb-4'} max-w-3xl ${alignCls} ${className}`.trim()}>
-      <p className={`st-kicker cyber-title uppercase tracking-[0.3em] text-zinc-500 ${compact ? 'text-[9px]' : 'text-[10px]'}`}>{kicker}</p>
-      <h2 className={`mt-2 font-black tracking-tighter leading-[1.1] text-zinc-900 ${compact ? 'text-xl sm:text-[1.35rem] lg:text-[1.55rem]' : 'text-2xl sm:text-[1.65rem] lg:text-[1.95rem]'}`}>
+      <p className={`st-kicker cyber-title uppercase tracking-[0.3em] text-zinc-500 ${compact ? 'text-[11px]' : 'text-[12px]'}`}>{kicker}</p>
+      <h2 className={`mt-2 font-black tracking-tighter leading-[1.1] text-zinc-900 ${compact ? 'text-[1.45rem] sm:text-[1.6rem] lg:text-[1.85rem]' : 'text-[1.8rem] sm:text-[2rem] lg:text-[2.3rem]'}`}>
         {titleWords}
       </h2>
-      {subtitle ? <p className={`st-sub mt-2 leading-relaxed text-zinc-700 ${compact ? 'text-xs' : 'text-[13px]'}`}>{subtitle}</p> : null}
+      {subtitle ? <p className={`st-sub mt-2 leading-relaxed text-zinc-700 ${compact ? 'text-[14px]' : 'text-[15.5px]'}`}>{subtitle}</p> : null}
     </div>
   );
 };

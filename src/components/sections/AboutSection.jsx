@@ -74,14 +74,14 @@ const AboutSection = () => {
             <div className="w-full">
               {/* Dossier Header */}
               <div className="flex items-center justify-between border-b border-zinc-200/50 pb-2 mb-3">
-                <span className="font-mono text-[7px] sm:text-[7.5px] text-zinc-400 uppercase tracking-[0.2em]">[ SYSTEM_DOSSIER // HUY_PHAN ]</span>
+                <span className="font-mono text-[12px] sm:text-[12.5px] text-zinc-400 uppercase tracking-[0.2em]">[ SYSTEM_DOSSIER // HUY_PHAN ]</span>
                 <span className="h-1.5 w-1.5 rounded-full bg-zinc-800 animate-pulse" />
               </div>
 
               {/* Bio Content */}
               <div className="space-y-3 sm:space-y-4 overflow-y-auto pr-1" data-lenis-prevent>
                 {aboutParagraphs.map((text, idx) => (
-                  <p key={idx} className="text-[11.5px] leading-relaxed text-zinc-600 sm:text-[12.5px]">
+                  <p key={idx} className="text-[16px] leading-relaxed text-zinc-600 sm:text-[17px]">
                     {text}
                   </p>
                 ))}
@@ -89,7 +89,7 @@ const AboutSection = () => {
             </div>
 
             {/* Dossier Footer */}
-            <div className="border-t border-zinc-200/50 pt-2.5 mt-3 font-mono text-[7px] sm:text-[7.5px] text-zinc-400 flex justify-between tracking-wider">
+            <div className="border-t border-zinc-200/50 pt-2.5 mt-3 font-mono text-[12px] sm:text-[12.5px] text-zinc-400 flex justify-between tracking-wider">
               <span>LOC: HCMC, VN</span>
               <span>STATUS: CORE_STABLE</span>
             </div>
@@ -108,8 +108,8 @@ const AboutSection = () => {
 
             {/* Tech Timeline Header */}
             <div className="flex items-center justify-between border-b border-zinc-200/50 pb-2 mb-3">
-              <h3 className="cyber-title text-[9px] sm:text-[10px] uppercase tracking-[0.2em] text-zinc-500 font-extrabold">Experience Timeline</h3>
-              <span className="font-mono text-[7px] text-zinc-400 tracking-wider">REF_ID: 9942</span>
+              <h3 className="cyber-title text-[13.5px] sm:text-[14.5px] uppercase tracking-[0.2em] text-zinc-500 font-extrabold">Experience Timeline</h3>
+              <span className="font-mono text-[11.5px] text-zinc-400 tracking-wider">REF_ID: 9942</span>
             </div>
 
             {/* Timeline Tree */}
@@ -128,16 +128,16 @@ const AboutSection = () => {
                     )}
                     
                     <div className="flex items-center gap-2">
-                      <span className="text-[8px] sm:text-[8.5px] font-mono uppercase tracking-[0.2em] text-zinc-400">{item.year}</span>
+                      <span className="text-[12px] sm:text-[12.5px] font-mono uppercase tracking-[0.2em] text-zinc-400">{item.year}</span>
                       {isLatest && (
-                        <span className="text-[6.5px] font-mono tracking-wider text-emerald-600 bg-emerald-500/5 px-1 py-0.2 rounded border border-emerald-500/20 uppercase">
+                        <span className="text-[10.5px] font-mono tracking-wider text-emerald-600 bg-emerald-500/5 px-1 py-0.2 rounded border border-emerald-500/20 uppercase">
                           Active
                         </span>
                       )}
                     </div>
-                    <h4 className="mt-0.5 text-[11.5px] sm:text-[12px] font-bold text-zinc-900 leading-tight">{item.role}</h4>
-                    <div className="text-[10px] font-medium text-zinc-700/90">{item.company}</div>
-                    <p className="mt-1 text-[10px] leading-relaxed text-zinc-500">{item.description}</p>
+                    <h4 className="mt-0.5 text-[16px] sm:text-[16.5px] font-bold text-zinc-900 leading-tight">{item.role}</h4>
+                    <div className="text-[14.5px] font-medium text-zinc-700/90">{item.company}</div>
+                    <p className="mt-1 text-[14.5px] leading-relaxed text-zinc-500">{item.description}</p>
                   </div>
                 );
               })}
@@ -163,7 +163,7 @@ const AboutSection = () => {
                   <div className="absolute inset-0 -translate-x-full group-hover/card:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/12 to-transparent pointer-events-none" />
 
                   {/* Corner telemetry tag */}
-                  <span className="absolute top-3.5 right-4 font-mono text-[6.5px] text-zinc-400 tracking-widest uppercase">
+                  <span className="absolute top-3.5 right-4 font-mono text-[10.5px] text-zinc-400 tracking-widest uppercase">
                     [{telemetryLabels[idx]}]
                   </span>
 
@@ -173,7 +173,7 @@ const AboutSection = () => {
                   >
                     {stat.value}
                   </p>
-                  <p className="mt-0.5 text-[8.5px] sm:text-[9px] uppercase tracking-[0.2em] text-zinc-400 font-extrabold">{stat.label}</p>
+                  <p className="mt-0.5 text-[13px] sm:text-[13.5px] uppercase tracking-[0.2em] text-zinc-400 font-extrabold">{stat.label}</p>
                   
                   {/* Glowing progress line */}
                   <div className="mt-2.5 h-[3px] w-full overflow-hidden rounded-full bg-zinc-200/50">

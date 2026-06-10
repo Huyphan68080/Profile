@@ -41,7 +41,7 @@ const Navbar = ({ viewCount, navItems = [], activeSection, onNavigate }) => {
             id="nav-brand-link"
             href="#hero"
             onClick={(e) => handleClick(e, 'hero')}
-            className="nav-brand cyber-title rounded-full px-2.5 py-1 text-xs sm:px-3 sm:py-1.5 sm:text-sm inline-flex items-center justify-center"
+            className="nav-brand cyber-title rounded-full px-2.5 py-1 text-[13.5px] sm:px-3 sm:py-1.5 sm:text-[15.5px] inline-flex items-center justify-center"
           >
             {profile.brand}
           </a>
@@ -72,7 +72,7 @@ const Navbar = ({ viewCount, navItems = [], activeSection, onNavigate }) => {
               id="nav-views-link"
               href="#ip-check"
               onClick={(e) => handleClick(e, 'ip-check')}
-              className="nav-views inline-flex items-center justify-center gap-1.5 rounded-full px-3 py-1 text-xs sm:px-4 sm:py-1.5 sm:text-sm"
+              className="nav-views inline-flex items-center justify-center gap-1.5 rounded-full px-3 py-1 text-[13.5px] sm:px-4 sm:py-1.5 sm:text-[15.5px]"
               aria-label="Open visitor stats"
             >
               <FiEye className="text-xs sm:text-sm" />

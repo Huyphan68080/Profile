@@ -123,7 +123,7 @@ const LoadingScreen = ({ progress = 0, isMobile = false }) => {
             animate={{ opacity: 0.35, y: 0 }}
             exit={{ opacity: 0, y: -6 }}
             transition={{ duration: 0.4, ease: 'easeOut' }}
-            className="text-[7.5px] font-bold uppercase tracking-[0.3em] text-white pl-[0.3em]"
+            className="text-[10px] font-bold uppercase tracking-[0.3em] text-white pl-[0.3em]"
           >
             {getProgressPhase(clamped)}
           </motion.p>

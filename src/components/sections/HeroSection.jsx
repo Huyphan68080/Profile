@@ -109,25 +109,25 @@ const HeroSection = ({ isLoading = false }) => {
               <div className="hero-chip story-chip">Landing Frame</div>
 
               <div className="mt-2 max-w-3xl sm:mt-3">
-                <p className="hero-kicker cyber-title text-[9px] sm:text-[10px] uppercase tracking-[0.34em] text-zinc-500">{profile.kicker}</p>
+                <p className="hero-kicker cyber-title text-[13px] sm:text-[14px] uppercase tracking-[0.34em] text-zinc-500">{profile.kicker}</p>
 
                 <h1 className="mt-1.5 text-[1.85rem] font-black tracking-tighter leading-[0.98] text-zinc-900 sm:text-3xl lg:text-[3.2rem]">
                   <span className="inline-flex items-center">
                     <span>{nameChars}</span>
                     <span className="ml-2 inline-block h-[0.95em] w-[2px] animate-pulse bg-zinc-900" />
                   </span>
-                  <span className="hero-role mt-1 block bg-gradient-to-r from-zinc-700 via-zinc-500 to-zinc-600 bg-clip-text text-[0.8rem] font-semibold uppercase tracking-[0.2em] text-transparent sm:mt-1.5 sm:text-[1.1rem] sm:tracking-[0.28em]">
+                  <span className="hero-role mt-1 block bg-gradient-to-r from-zinc-700 via-zinc-500 to-zinc-600 bg-clip-text text-[1.15rem] font-semibold uppercase tracking-[0.2em] text-transparent sm:mt-1.5 sm:text-[1.5rem] sm:tracking-[0.28em]">
                     {profile.role}
                   </span>
                 </h1>
 
-                <div className="hero-typewriter mt-2 inline-flex max-w-full items-center rounded-full border border-zinc-300/60 bg-black/[0.02] px-2.5 py-1 text-[11px] text-zinc-800 sm:mt-3 sm:px-3.5 sm:py-1.5 sm:text-xs">
+                <div className="hero-typewriter mt-2 inline-flex max-w-full items-center rounded-full border border-zinc-300/60 bg-black/[0.02] px-2.5 py-1 text-[15px] text-zinc-800 sm:mt-3 sm:px-3.5 sm:py-1.5 sm:text-[16px]">
                   <span className="mr-2 inline-flex h-1.5 w-1.5 rounded-full bg-emerald-600 shadow-[0_0_12px_rgba(16,185,129,0.4)]" />
                   {typedText}
                   <span className="ml-1 inline-block w-3 animate-pulse">|</span>
                 </div>
 
-                <p className="hero-headline mt-2.5 max-w-2xl text-[11.5px] leading-relaxed text-zinc-700 sm:mt-3.5 sm:text-[12.5px]">
+                <p className="hero-headline mt-2.5 max-w-2xl text-[16.5px] leading-relaxed text-zinc-700 sm:mt-3.5 sm:text-[18.5px]">
                   {profile.headline}
                 </p>
               </div>
@@ -137,13 +137,13 @@ const HeroSection = ({ isLoading = false }) => {
               <div className="hero-cta mt-3 flex flex-wrap items-center gap-1.5 sm:mt-4 sm:gap-2.5">
                 <RippleButton
                   href="#projects"
-                  className="bg-zinc-900 hover:bg-zinc-800 text-white border border-transparent text-[10px] uppercase tracking-[0.22em]"
+                  className="bg-zinc-900 hover:bg-zinc-800 text-white border border-transparent text-[14px] uppercase tracking-[0.22em]"
                 >
                   Explore Projects
                 </RippleButton>
                 <RippleButton
                   href="#contact"
-                  className="border-zinc-200 bg-black/[0.03] text-[10px] uppercase tracking-[0.22em] text-zinc-800"
+                  className="border-zinc-200 bg-black/[0.03] text-[14px] uppercase tracking-[0.22em] text-zinc-800"
                 >
                   Start A Project
                 </RippleButton>
@@ -152,10 +152,10 @@ const HeroSection = ({ isLoading = false }) => {
               <div className="mt-3.5 hidden gap-2.5 sm:grid sm:grid-cols-3 lg:mt-4.5">
                 {heroSignals.map((signal, index) => (
                   <div key={signal} className="hero-signal glass-panel rounded-xl border border-zinc-200/60 px-3 py-2.5">
-                    <p className="cyber-title text-[9px] uppercase tracking-[0.28em] text-zinc-500">
+                    <p className="cyber-title text-[13px] uppercase tracking-[0.28em] text-zinc-500">
                       Signal {index + 1}
                     </p>
-                    <p className="mt-1 text-[11px] leading-normal text-zinc-700">{signal}</p>
+                    <p className="mt-1 text-[15px] leading-normal text-zinc-700">{signal}</p>
                   </div>
                 ))}
               </div>
@@ -166,7 +166,7 @@ const HeroSection = ({ isLoading = false }) => {
           <div className="md:col-span-4 flex flex-col gap-3 h-full justify-between">
             
             {/* Identity Card */}
-            <div className="hero-card glass-panel relative overflow-hidden rounded-[1.2rem] border border-zinc-200 p-3.5 sm:p-4 flex-1 flex flex-col justify-center" style={{ background: 'rgba(255, 255, 255, 0.20)', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)' }}>
+            <div className="hero-card glass-panel relative overflow-visible rounded-[1.2rem] border border-zinc-200 p-3.5 sm:p-4 flex-1 flex flex-col justify-center" style={{ background: 'rgba(255, 255, 255, 0.20)', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)' }}>
               <div className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-zinc-400/20 to-transparent" />
               <div className="absolute -left-6 top-6 h-14 w-14 rounded-full bg-zinc-500/5 blur-xl" />
 
@@ -178,6 +178,34 @@ const HeroSection = ({ isLoading = false }) => {
                   onMouseLeave={handleAvatarMouseLeave}
                   style={{ perspective: '600px' }}
                 >
+                  {/* Thought Bubble Cloud */}
+                  {runtimeStatus.customLabel && (
+                    <div 
+                      className="absolute bottom-[95%] left-[82%] z-30 pointer-events-none select-none"
+                      style={{
+                        filter: 'drop-shadow(0 10px 20px rgba(0, 0, 0, 0.28)) drop-shadow(0 0 1px rgba(255, 255, 255, 0.15))'
+                      }}
+                    >
+                      {/* Main Cloud Body */}
+                      <div className="relative bg-zinc-950/90 text-white px-3 py-1.5 rounded-[18px] text-[12px] font-bold leading-tight whitespace-nowrap backdrop-blur-md">
+                        {/* Cloud Bumps */}
+                        <div className="absolute -top-2 left-3 w-5 h-5 rounded-full bg-zinc-950" />
+                        <div className="absolute -top-2.5 right-4 w-6 h-6 rounded-full bg-zinc-950" />
+                        <div className="absolute -bottom-1 left-4 w-4 h-4 rounded-full bg-zinc-950" />
+                        <div className="absolute -bottom-1 right-4 w-3.5 h-3.5 rounded-full bg-zinc-950" />
+                        <div className="absolute top-0.5 -left-1.5 w-4 h-4 rounded-full bg-zinc-950" />
+                        <div className="absolute top-0.5 -right-1.5 w-4.5 h-4.5 rounded-full bg-zinc-950" />
+                        
+                        {/* Text Content */}
+                        <span className="relative z-10">{runtimeStatus.customLabel}</span>
+                      </div>
+                      
+                      {/* Thought Trail Dots (Cascading) */}
+                      <div className="absolute -bottom-3 left-2 w-2.5 h-2.5 rounded-full bg-zinc-950" />
+                      <div className="absolute -bottom-5.5 left-0.5 w-1.5 h-1.5 rounded-full bg-zinc-950" />
+                      <div className="absolute -bottom-7.5 left-0 w-1 h-1 rounded-full bg-zinc-950" />
+                    </div>
+                  )}
                   <div
                     className="relative h-full w-full transition-transform duration-200 ease-out"
                     style={{ transform: `rotateX(${tilt.rx}deg) rotateY(${tilt.ry}deg)` }}
@@ -204,21 +232,16 @@ const HeroSection = ({ isLoading = false }) => {
 
                 <div className="space-y-2 text-center lg:text-left">
                   <div>
-                    <p className="cyber-title text-[9px] uppercase tracking-[0.3em] text-zinc-500">Realtime Identity</p>
-                    <h2 className="mt-0.5 text-base font-extrabold tracking-tight text-zinc-900">{profile.name}</h2>
+                    <h2 className="mt-0.5 text-lg font-extrabold tracking-tight text-zinc-900">{profile.name}</h2>
                   </div>
 
-                  <div className="grid gap-1.5 grid-cols-2">
+                  <div className="w-full">
                     <div className="rounded-xl border border-zinc-200/80 bg-black/[0.08] p-2">
-                      <p className="cyber-title text-[8.5px] uppercase tracking-[0.22em] text-zinc-600">Status</p>
-                      <p className={`mt-0.5 flex items-center justify-center lg:justify-start gap-1.5 text-xs leading-snug ${runtimeStatus.toneClass}`}>
+                      <p className="cyber-title text-[12.5px] uppercase tracking-[0.22em] text-zinc-600">Status</p>
+                      <p className={`mt-0.5 flex items-center justify-center lg:justify-start gap-1.5 text-[15px] leading-snug ${runtimeStatus.toneClass}`}>
                         <span className={`inline-block h-2.5 w-2.5 rounded-full ${runtimeStatus.dotClass}`} />
                         {runtimeStatus.label}
                       </p>
-                    </div>
-                    <div className="rounded-xl border border-zinc-200/80 bg-black/[0.08] p-2">
-                      <p className="cyber-title text-[8.5px] uppercase tracking-[0.22em] text-zinc-600">Focus</p>
-                      <p className="mt-0.5 text-xs font-semibold leading-snug text-zinc-800">Motion UI.</p>
                     </div>
                   </div>
                 </div>
@@ -226,21 +249,21 @@ const HeroSection = ({ isLoading = false }) => {
             </div>
 
             {/* Live Presence Card */}
-            <div className="hero-card glass-panel rounded-[1.2rem] border border-zinc-200 p-3.5 sm:p-4 flex-1 flex flex-col justify-between">
+            <div className="hero-card glass-panel rounded-[1.4rem] border border-zinc-200 p-4 sm:p-5 flex-1 flex flex-col justify-between">
               <div>
-                <p className="cyber-title text-[9px] uppercase tracking-[0.22em] text-zinc-500">Live Presence</p>
-                <p className="mt-1 text-[11px] leading-relaxed text-zinc-600">
+                <p className="cyber-title text-[12px] uppercase tracking-[0.22em] text-zinc-500">Live Presence</p>
+                <p className="mt-1.5 text-[14px] leading-relaxed text-zinc-600">
                   Current activity snapshot.
                 </p>
               </div>
 
-              <div className="mt-2 flex-1 flex flex-col justify-center">
+              <div className="mt-3 flex-1 flex flex-col justify-center">
                 {runtimeStatus.activityLines?.length > 0 ? (
-                  <div data-lenis-prevent className="max-h-20 space-y-1 overflow-y-auto pr-1">
+                  <div data-lenis-prevent className="max-h-24 space-y-1.5 overflow-y-auto pr-1">
                     {runtimeStatus.activityLines.map((item) => (
                       <p
                         key={item.id}
-                        className={`break-words text-[10.5px] leading-snug ${item.isMedia ? 'text-zinc-900 font-medium' : 'text-zinc-700'}`}
+                        className={`break-words text-[14.5px] leading-snug ${item.isMedia ? 'text-zinc-900 font-medium' : 'text-zinc-700'}`}
                       >
                         {item.label}
                         {item.duration ? <span className="ml-1 text-emerald-600">({item.duration})</span> : null}
@@ -248,9 +271,9 @@ const HeroSection = ({ isLoading = false }) => {
                     ))}
                   </div>
                 ) : runtimeStatus.customLabel ? (
-                  <p className="break-words text-[10.5px] italic text-zinc-500">{runtimeStatus.customLabel}</p>
+                  <p className="break-words text-[14.5px] italic text-zinc-500">{runtimeStatus.customLabel}</p>
                 ) : (
-                  <p className="text-[10.5px] text-zinc-500">No active session detected.</p>
+                  <p className="text-[14.5px] text-zinc-500">No active session detected.</p>
                 )}
               </div>
             </div>

@@ -130,30 +130,30 @@ const ProjectCard = ({ project, index }) => {
           </div>
         )
       ) : (
-        <div className="flex aspect-[2/1] items-center justify-center rounded-[0.7rem] border border-zinc-200 bg-zinc-400/5 text-[9px] uppercase tracking-[0.14em] text-zinc-500">
+        <div className="flex aspect-[2/1] items-center justify-center rounded-[0.7rem] border border-zinc-200 bg-zinc-400/5 text-[11px] uppercase tracking-[0.14em] text-zinc-500">
           Preview Coming Soon
         </div>
       )}
 
       <div className="mt-2 flex items-start justify-between gap-2">
         <div>
-          <p className="cyber-title text-[8px] uppercase tracking-[0.24em] text-zinc-500">Project {index + 1}</p>
-          <h3 className="mt-1 text-[0.85rem] font-semibold leading-tight text-zinc-900">{project.title}</h3>
+          <p className="cyber-title text-[10px] uppercase tracking-[0.24em] text-zinc-500">Project {index + 1}</p>
+          <h3 className="mt-1 text-[1.15rem] font-semibold leading-tight text-zinc-900">{project.title}</h3>
         </div>
         {hasLiveDemo ? (
-          <span className="rounded-full border border-emerald-500/14 bg-emerald-500/10 px-1.5 py-0.5 text-[7px] uppercase tracking-[0.16em] text-emerald-600">
+          <span className="rounded-full border border-emerald-500/14 bg-emerald-500/10 px-1.5 py-0.5 text-[9px] uppercase tracking-[0.16em] text-emerald-600">
             Live
           </span>
         ) : null}
       </div>
 
-      <p className="mt-1.5 line-clamp-2 text-[10px] leading-relaxed text-zinc-700 sm:text-[11px]">{project.description}</p>
+      <p className="mt-1.5 line-clamp-2 text-[14.5px] leading-relaxed text-zinc-700 sm:text-[15.5px]">{project.description}</p>
 
       <div className="mt-2 hidden flex-wrap gap-1 sm:flex">
         {project.tags.map((tag) => (
           <span
             key={tag}
-            className="rounded-full border border-zinc-200 bg-black/[0.02] px-1.5 py-0.5 text-[7px] uppercase tracking-[0.12em] text-zinc-600"
+            className="rounded-full border border-zinc-200 bg-black/[0.02] px-1.5 py-0.5 text-[9px] uppercase tracking-[0.12em] text-zinc-600"
           >
             {tag}
           </span>
@@ -164,7 +164,7 @@ const ProjectCard = ({ project, index }) => {
         <RippleButton
           href={hasLiveDemo ? project.href : undefined}
           external={hasLiveDemo}
-          className="min-h-0 border-zinc-200 bg-black/[0.03] px-2.5 py-1 text-[8px] uppercase tracking-[0.14em] text-zinc-800"
+          className="min-h-0 border-zinc-200 bg-black/[0.03] px-2.5 py-1 text-[12.5px] uppercase tracking-[0.14em] text-zinc-800"
         >
           {hasLiveDemo ? 'Open Project' : 'Coming Soon'}
         </RippleButton>
