@@ -166,7 +166,7 @@ const HeroSection = ({ isLoading = false }) => {
           <div className="md:col-span-4 flex flex-col gap-3 h-full justify-between">
             
             {/* Identity Card */}
-            <div className="hero-card glass-panel relative overflow-hidden rounded-[1.2rem] border border-zinc-200 p-3.5 sm:p-4 flex-1 flex flex-col justify-center" style={{ background: 'rgba(255, 255, 255, 0.20)', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)' }}>
+            <div className="hero-card glass-panel relative overflow-hidden rounded-[1.2rem] border border-zinc-200 p-3.5 sm:p-4 flex-1 flex flex-col justify-center" style={{ background: 'rgba(255, 255, 255, 0.75)', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)' }}>
               <div className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-zinc-400/20 to-transparent" />
               <div className="absolute -left-6 top-6 h-14 w-14 rounded-full bg-zinc-500/5 blur-xl" />
 
