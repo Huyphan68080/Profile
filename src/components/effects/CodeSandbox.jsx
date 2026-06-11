@@ -1,5 +1,5 @@
-import { useState, useRef } from 'react';
-import { FiCopy, FiCheck, FiDatabase, FiServer, FiActivity } from 'react-icons/fi';
+import { useState, useRef, useEffect } from 'react';
+import { FiCopy, FiCheck, FiDatabase, FiServer, FiActivity, FiTerminal } from 'react-icons/fi';
 
 const codeFiles = {
   'Server.js': {
@@ -90,7 +90,279 @@ export const VisitorLog = mongoose.model('VisitorLog', visitorLogSchema);`,
     name: 'Schema Visualizer',
     icon: FiActivity,
     type: 'visualizer'
+  },
+  'Decrypt.sh': {
+    name: 'Decryptor',
+    icon: FiTerminal,
+    type: 'game'
   }
+};
+
+const DecryptorGame = () => {
+  const [step, setStep] = useState('start'); // start, scan, key, bypass, success, fail
+  const [logs, setLogs] = useState([]);
+  const [progress, setProgress] = useState(0);
+  const [attempts, setAttempts] = useState(3);
+  const [timeElapsed, setTimeElapsed] = useState(0);
+  const [markerPos, setMarkerPos] = useState(0);
+  const intervalRef = useRef(null);
+  const startTimeRef = useRef(null);
+  const logsEndRef = useRef(null);
+
+  const addLog = (text) => {
+    setLogs((prev) => {
+      const next = [...prev, `[${new Date().toLocaleTimeString('en-US', { hour12: false })}] ${text}`];
+      return next.slice(-15);
+    });
+  };
+
+  const startDecoder = () => {
+    setStep('scan');
+    setLogs([]);
+    setAttempts(3);
+    setProgress(0);
+    startTimeRef.current = Date.now();
+    addLog('SYS_INIT: Decryption protocol started.');
+    addLog('PORT_CONN: Establishing handshake at localhost...');
+
+    let currentProgress = 0;
+    const interval = setInterval(() => {
+      currentProgress += 5 + Math.floor(Math.random() * 8);
+      if (currentProgress >= 100) {
+        clearInterval(interval);
+        setProgress(100);
+        addLog('PORT_CONN: Handshake secure. Node handshake OK.');
+        addLog('FIREWALL: SSL certificate locked. Encryption check required.');
+        setTimeout(() => {
+          setStep('key');
+          addLog('CHALLENGE: Identify key with correct checksum hash (ends with F).');
+        }, 600);
+      } else {
+        setProgress(currentProgress);
+        if (currentProgress > 30 && currentProgress < 50 && !logs.some(l => l.includes('Sub-channels'))) {
+          addLog(`SYS_SCAN: Mapping hardware network routes... ${currentProgress}%`);
+        } else if (currentProgress > 70 && currentProgress < 85 && !logs.some(l => l.includes('Bypassing'))) {
+          addLog(`SEC_BYPASS: Injecting memory buffer... ${currentProgress}%`);
+        }
+      }
+    }, 100);
+  };
+
+  const handleKeySelect = (key) => {
+    if (key.isCorrect) {
+      addLog(`CHALLENGE: Key ${key.val} checksum MATCHED. Accessing encryption stack...`);
+      setTimeout(() => {
+        setStep('bypass');
+        addLog('FIREWALL: Connection timeout imminent! Bypass buffer.');
+        startBypassOscillator();
+      }, 600);
+    } else {
+      const nextAttempts = attempts - 1;
+      setAttempts(nextAttempts);
+      addLog(`CHALLENGE: Key ${key.val} checksum FAIL. Alert trigger! (${nextAttempts} lives left).`);
+      if (nextAttempts <= 0) {
+        setStep('fail');
+        addLog('CRITICAL_ERR: Too many failed keys. Firewall locked node.');
+      }
+    }
+  };
+
+  const startBypassOscillator = () => {
+    let pos = 0;
+    let direction = 1;
+    clearInterval(intervalRef.current);
+    intervalRef.current = setInterval(() => {
+      pos += direction * 4.5;
+      if (pos >= 100) {
+        pos = 100;
+        direction = -1;
+      } else if (pos <= 0) {
+        pos = 0;
+        direction = 1;
+      }
+      setMarkerPos(pos);
+    }, 30);
+  };
+
+  const handleBypassClick = () => {
+    clearInterval(intervalRef.current);
+    if (markerPos >= 36 && markerPos <= 64) {
+      addLog('FIREWALL: Security protocol overridden! Decoding file...');
+      const duration = ((Date.now() - startTimeRef.current) / 1000).toFixed(1);
+      setTimeElapsed(duration);
+      setTimeout(() => {
+        setStep('success');
+        addLog('ACCESS_GRANTED: File CORE_DATA.enc unlocked successfully.');
+      }, 1000);
+    } else {
+      const nextAttempts = attempts - 1;
+      setAttempts(nextAttempts);
+      addLog(`FIREWALL_ERR: Offset deviation too high (${Math.abs(50 - markerPos).toFixed(0)}%).`);
+      if (nextAttempts <= 0) {
+        setStep('fail');
+        addLog('CRITICAL_ERR: Bypass buffer overflow. Connection closed.');
+      } else {
+        startBypassOscillator();
+      }
+    }
+  };
+
+  const resetGame = () => {
+    clearInterval(intervalRef.current);
+    setStep('start');
+    setLogs([]);
+  };
+
+  const keys = [
+    { val: '0x9B2F', isCorrect: true },
+    { val: '0xAC1E', isCorrect: false },
+    { val: '0xE58C', isCorrect: false },
+    { val: '0x3D72', isCorrect: false },
+    { val: '0x7F4A', isCorrect: false },
+    { val: '0x6A8D', isCorrect: false }
+  ];
+
+  useEffect(() => {
+    if (logsEndRef.current) {
+      logsEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [logs]);
+
+  useEffect(() => {
+    return () => clearInterval(intervalRef.current);
+  }, []);
+
+  return (
+    <div className="w-full h-full flex flex-col justify-between font-mono text-zinc-800 dark:text-zinc-200">
+      <div 
+        className="h-16 overflow-y-auto bg-black/40 text-emerald-500/90 dark:text-emerald-400 p-2 rounded-lg border border-zinc-200/50 dark:border-zinc-800/40 text-[9px] leading-relaxed select-none"
+        data-lenis-prevent
+      >
+        {logs.length === 0 ? (
+          <div className="text-zinc-400 dark:text-zinc-500">// Terminal standby. Ready for execution.</div>
+        ) : (
+          logs.map((log, i) => <div key={i}>{log}</div>)
+        )}
+        <div ref={logsEndRef} />
+      </div>
+
+      <div className="flex-1 flex flex-col justify-center items-center mt-2 min-h-[120px] bg-zinc-200/10 dark:bg-zinc-900/10 rounded-xl border border-zinc-200/40 dark:border-zinc-800/40 p-2 relative overflow-hidden">
+        {step === 'start' && (
+          <div className="text-center p-2">
+            <h4 className="text-[11px] font-bold tracking-wider text-zinc-900 dark:text-zinc-100 uppercase">SYS_DECRYPTOR: ACTIVE</h4>
+            <p className="text-[9px] text-zinc-500 mt-1 max-w-[280px] leading-normal">
+              Inject buffer overflow payload to bypass SSL lock on <code className="bg-black/5 dark:bg-black/20 px-1 rounded text-red-500">CORE_DATA.enc</code>.
+            </p>
+            <button
+              onClick={startDecoder}
+              className="mt-3 px-3 py-1.5 bg-zinc-950 text-white rounded-lg border border-zinc-800 text-[10px] hover:bg-zinc-900 active:scale-95 transition-all duration-150 uppercase tracking-widest font-bold"
+            >
+              Start Handshake
+            </button>
+          </div>
+        )}
+
+        {step === 'scan' && (
+          <div className="w-full max-w-[200px] text-center">
+            <div className="text-[10px] text-zinc-600 dark:text-zinc-400 animate-pulse font-bold">TUNNELING BUFFER: {progress}%</div>
+            <div className="w-full h-1.5 bg-zinc-200 dark:bg-zinc-800 rounded-full mt-2 overflow-hidden border border-zinc-300 dark:border-zinc-700/50">
+              <div 
+                className="h-full bg-emerald-500 transition-all duration-75"
+                style={{ width: `${progress}%` }}
+              />
+            </div>
+          </div>
+        )}
+
+        {step === 'key' && (
+          <div className="w-full h-full flex flex-col justify-between p-1">
+            <div className="flex justify-between items-center text-[9px] border-b border-zinc-200/40 dark:border-zinc-800/40 pb-1 mb-1.5">
+              <span className="text-zinc-500 uppercase tracking-wider">CHALLENGE: KEY MATCH</span>
+              <span className="text-red-500 font-bold">LIVES: {Array(attempts).fill('⚡').join('')}</span>
+            </div>
+            <div className="grid grid-cols-3 gap-1.5 flex-1 items-center justify-center">
+              {keys.map((k, i) => (
+                <button
+                  key={i}
+                  onClick={() => handleKeySelect(k)}
+                  className="px-2 py-1.5 rounded bg-white dark:bg-zinc-850 border border-zinc-200 dark:border-zinc-700 hover:border-zinc-800 dark:hover:border-zinc-400 text-[9.5px] font-bold text-center active:scale-95 transition-all duration-150"
+                >
+                  {k.val}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {step === 'bypass' && (
+          <div className="w-full h-full flex flex-col justify-between p-1">
+            <div className="flex justify-between items-center text-[9px] border-b border-zinc-200/40 dark:border-zinc-800/40 pb-1 mb-1.5">
+              <span className="text-zinc-500 uppercase tracking-wider">CHALLENGE: FIREWALL BYPASS</span>
+              <span className="text-red-500 font-bold">LIVES: {Array(attempts).fill('⚡').join('')}</span>
+            </div>
+            <div className="flex-1 flex flex-col justify-center items-center w-full">
+              <div className="w-[180px] h-3 bg-zinc-200 dark:bg-zinc-800 rounded-md relative overflow-hidden border border-zinc-300 dark:border-zinc-700/50">
+                <div className="absolute inset-y-0 left-[38%] right-[38%] bg-emerald-500/20 border-x border-emerald-500/30" />
+                <div 
+                  className="absolute inset-y-0 w-1.5 bg-emerald-500 shadow-[0_0_8px_#10b981]"
+                  style={{ left: `${markerPos}%`, transform: 'translateX(-50%)' }}
+                />
+              </div>
+              <p className="text-[8px] text-zinc-400 mt-1 text-center font-bold uppercase tracking-wider">Lock at the center zone</p>
+              <button
+                onClick={handleBypassClick}
+                className="mt-2.5 px-3 py-1.5 bg-zinc-950 text-white rounded-lg border border-zinc-800 text-[10px] hover:bg-zinc-900 active:scale-95 transition-all duration-150 uppercase tracking-wider font-bold"
+              >
+                Trigger Bypass
+              </button>
+            </div>
+          </div>
+        )}
+
+        {step === 'success' && (
+          <div className="text-center p-1.5">
+            <div className="text-emerald-500 font-extrabold text-[12px] uppercase tracking-widest animate-bounce">Access Granted</div>
+            <pre className="text-[6.5px] leading-tight text-emerald-500/80 my-1.5 select-none font-bold">
+{`   ___ ___   ___  _  _____ ___ 
+  / __/ _ \\ / _ \\| |/ /_ _/ __|
+ | (_| (_) | (_) | ' < | | (__ 
+  \\___\\___/ \\___/|_|\\_\\___\\___|`}
+            </pre>
+            <div className="text-[8.5px] font-bold text-zinc-700 dark:text-zinc-300">
+              Badge: <span className="text-zinc-900 dark:text-white bg-emerald-500/10 border border-emerald-500/30 px-1.5 py-0.5 rounded text-[8.5px]">Elite Decryptor</span>
+            </div>
+            <div className="text-[8px] text-zinc-500 mt-1">Time: {timeElapsed}s | Checksum: Secure</div>
+            <button
+              onClick={resetGame}
+              className="mt-2 px-2.5 py-1 bg-zinc-900 hover:bg-zinc-800 text-white border border-transparent rounded-lg text-[9px] uppercase tracking-wider"
+            >
+              Reset Terminal
+            </button>
+          </div>
+        )}
+
+        {step === 'fail' && (
+          <div className="text-center p-2">
+            <div className="text-red-500 font-extrabold text-[12px] uppercase tracking-widest">Intrusion Alert</div>
+            <p className="text-[9px] text-zinc-500 mt-1 max-w-[280px] leading-normal uppercase">
+              Terminal Locked. Secure shell connection terminated.
+            </p>
+            <button
+              onClick={resetGame}
+              className="mt-3.5 px-3 py-1.5 bg-red-600 hover:bg-red-500 text-white border border-transparent rounded-lg text-[10px] active:scale-95 transition-all duration-150 uppercase tracking-widest font-bold"
+            >
+              Reboot Terminal
+            </button>
+          </div>
+        )}
+      </div>
+      
+      <div className="mt-2 text-[8px] leading-relaxed text-zinc-500 dark:text-zinc-400 font-mono flex items-center justify-between">
+        <span>SHELL: DECRYPT.SH</span>
+        <span>GATEWAY: 127.0.0.1</span>
+      </div>
+    </div>
+  );
 };
 
 const CodeSandbox = () => {
@@ -175,6 +447,9 @@ const CodeSandbox = () => {
               {currentFile.jsx}
             </div>
           </div>
+        ) : currentFile.type === 'game' ? (
+          /* Interactive Hacking Decryption Game */
+          <DecryptorGame />
         ) : (
           /* Database Schema Diagram Visualizer */
           <div className="w-full h-full flex flex-col justify-between">
